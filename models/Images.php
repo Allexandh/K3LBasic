@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+
 
 /**
  * This is the model class for table "images".
@@ -27,8 +29,8 @@ class Images extends \yii\db\ActiveRecord
     {
         return [
             [['caseId', 'imageFiles'], 'required'],
-            [['caseId'], 'string', 'max' => 10],
-            [['imageFiles'], 'string', 'max' => 50],
+            // [['caseId'], 'string', 'max' => 10],
+            // [['imageFiles'], 'string', 'max' => 100],
         ];
     }
 
@@ -42,4 +44,7 @@ class Images extends \yii\db\ActiveRecord
             'imageFiles' => 'Image Files',
         ];
     }
+
+
+
 }

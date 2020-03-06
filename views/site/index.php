@@ -28,7 +28,7 @@ $this->title = 'My Yii Application';
     <div class="jumbotron">
         <h1>K3L</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application....</p>
+        <!-- <p class="lead">You have successfully created your Yii-powered application....</p> -->
 
         <p><a class="btn btn-lg btn-success" href="/k3lweb/web/index.php?r=site%2Fform">ISI FORM</a></p>
     </div>
@@ -46,10 +46,32 @@ $this->title = 'My Yii Application';
             //'showOnEmpty' =>true,
             'columns' => [
                             'tanggalwaktu',
+                            // [
+                            //     'attribute' => 'gambar',
+                            //     'label' => 'Gambar',
+                            //     'format' => 'html',
+                            //     'value' => function($data){
+                            //         return 'Gambar';
+                            //     },
+                            //     //'visible' => true,
+                            //     'header' => 'Gambar',
+                            //     //'footer' => 'Gambar'
+                            // ],
                             [
                                 'attribute' => 'gambar',
                                 'label' => 'Gambar',
-                                //'value' =>
+                                'format' => 'html',
+                                // images.imageFiles
+                                'value' => function($data){
+                                    $imageLink = "";
+                                    $images = Images::find()->where(['caseId' => (string) $data['caseid']])->All();
+                                    foreach ($images as $img){
+                                        $imageLink .= '<a href="'.Yii::$app->request->baseUrl.'/uploads/'.$img['imageFiles'].'">Link</a>';
+                                    }
+                                    return $imageLink;
+                                    // return '<img src="'.Yii::$app->request->baseUrl.'/uploads/'.'images.imageFiles'.'">';
+                                },
+                                //'value' => 'images.imageFiles',
                                 //'visible' => true,
                                 'header' => 'Gambar',
                                 //'footer' => 'Gambar'
@@ -60,7 +82,7 @@ $this->title = 'My Yii Application';
                                 'label' => 'Status',
                                 'value' => function($data){
                                     if($data->status == 'Process'){
-                                        return 'On Going';
+                                        return 'Process';
                                     }else{
                                         return 'Done';
                                     }

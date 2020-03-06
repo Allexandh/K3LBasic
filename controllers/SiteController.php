@@ -6,9 +6,12 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
+use yii\web\UploadedFile;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\UploadForm;
+//use app\models\Forms;
 
 class SiteController extends Controller
 {
@@ -126,21 +129,62 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-
     public function actionForm()
     {
         $model = new \app\models\Forms();
-        $images = new \app\models\Images();
+        $images = new \app\models\UploadForm();
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                // form inputs are valid, do something here
-                return;
-            }
-        }
+            //var_dump(Yii::$app->request->post());
+            $images->imageFiles = UploadedFile::getInstances($images, 'imageFiles');
 
-        return $this->render('form', [
-            'model' => $model,'images' => $images,
-        ]);
+            date_default_timezone_set('Asia/Jakarta');
+            $time = date('Y-m-d_H-i-s');
+
+            $id = $model->saveData($time);//buat save data formnya
+            $images->upload($id,$time);//buat upload gambar di folder
+            //$id = $model->getId();
+            //$images->saveData($id,$time);//buat save data gambar yang diupload
+
+            if ($model->check(Yii::$app->request->post())) {
+                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
+            } else {
+                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
+            }
+
+            return $this->refresh();
+        } else {
+            //echo "asd";
+            // $model = new FormForm();
+            // var_dump($model->getForms());
+            return $this->render('form', [
+                'model' => $model,
+                'images' => $images
+            ]);
+        }
     }
+
+    // public function actionUpload()
+    // {
+    //     $images = new UploadForm();
+
+    //     if (Yii::$app->request->isPost) {
+    //         $images->imageFile = UploadedFile::getInstances($images, 'imageFile');
+    //         if ($images->upload()) {
+    //             echo "masukk";
+    //             // file is uploaded successfully
+    //             //return;
+    //         }else{
+    //             echo "kaga cuy";
+    //         }
+    //     }
+
+    //     //return $this->render('upload', ['images' => $images]);
+    // }
+
+    // public function actionFormAdmin(){
+
+    //     return $this->render('FormAdmin');
+    // }
+
 }

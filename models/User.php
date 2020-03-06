@@ -1,8 +1,11 @@
 <?php
 
 namespace app\models;
-
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+use Yii;
+use yii\db\ActiveRecord;
+//comment di bawah ini yang aslinya(waktu pertama buat), diganti biar jadi activerecord(model) dan bisa dipake buat crud
+//class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     public $id;
     public $username;
@@ -13,8 +16,8 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     private static $users = [
         '100' => [
             'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
+            'username' => 'admins',
+            'password' => 'admins',
             'authKey' => 'test100key',
             'accessToken' => '100-token',
         ],
@@ -26,6 +29,38 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
             'accessToken' => '101-token',
         ],
     ];
+
+    public function rules()
+    {
+        return [
+            ['id',
+            'username',
+            'auth_key',
+            'password_hash',
+            'password_reset_token',
+            'email:email',
+            'status',
+            'created_at',
+            'updated_at',
+            'verification_token'],
+        ];
+    }
+
+    // public function attributeLabels()
+    // {
+    //     return [
+    //         'id' => 'id',
+    //         'username' => 'username',
+    //         'auth_key' => 'auth_key',
+    //         'password_hash' => 'password_hash',
+    //         'password_reset_token' => 'password_reset_token',
+    //         'email' => 'email',
+    //         'status' => 'status',
+    //         'created_at' => 'created_at',
+    //         'updated_at' => 'updated_at',
+    //         'verification_token' => 'verification_token',
+    //     ];
+    // }
 
 
     /**
