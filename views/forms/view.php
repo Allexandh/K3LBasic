@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Forms */
@@ -10,7 +11,16 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Forms', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
-?>
+
+$this->registerJsFile(
+    '@web/js/print.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+
+ ?>
+
+
+
 <div class="forms-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -25,7 +35,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
+    <p>
+	<?php $form = ActiveForm::begin(); ?>
 
+    <?php $form->action = "/index.php?r=forms%2Fprint" ?>
+	<input type="hidden" id="tableencoded" name="tableencoded" />
+    <div class="form-group">
+        <?= Html::submitButton('Print Forms', ['class' => 'btn btn-danger']) ?>
+    </div>
+
+	<?php ActiveForm::end(); ?>
+
+    </p>
+	<div class="table-contents">
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -41,5 +63,5 @@ $this->params['breadcrumbs'][] = $this->title;
             'status',
         ],
     ]) ?>
-
+	</div>
 </div>

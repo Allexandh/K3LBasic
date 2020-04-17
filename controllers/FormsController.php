@@ -124,4 +124,13 @@ class FormsController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+	public function actionPrint()
+    {
+		$request=Yii::$app->request->post('tableencoded');
+
+        return $this->render('print', [
+            'request' => $request,
+        ]);
+    }
+
 }

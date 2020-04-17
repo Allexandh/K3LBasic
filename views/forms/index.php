@@ -52,6 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Forms', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+	<br>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -65,8 +66,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'phonenum',
             'name',
             'location',
-            'tanggalwaktu',
-            //'description',
+			[
+				'label' => 'Tanggal',
+				'attribute' => 'tanggalwaktu',
+				'value' => function($data){
+					return substr($data->tanggalwaktu, 0, -7);;
+				},
+			],            //'description',
             //'gambar',
             //'casedue',
             //'email:email',
