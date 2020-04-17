@@ -53,9 +53,25 @@ class RoleController extends Controller
      */
     public function actionView($id)
     {
+        //echo $email;
+        //var_dump($this->findModel($email));
+        //var_dump($this->tes());
+        //var_dump($tes);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+    protected function findModel($id)
+    {
+        //echo $email."  ";
+        if (($model = User::findOne($id)) !== null) {
+            return $model;
+        }
+        // $model = User::find()->where(['email' => $email])->one();
+        // return $model;
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     /**
@@ -117,12 +133,5 @@ class RoleController extends Controller
      * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
-        if (($model = User::findOne($id)) !== null) {
-            return $model;
-        }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
 }
