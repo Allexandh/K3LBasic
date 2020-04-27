@@ -4,7 +4,7 @@ $( document ).ready(function() {
 	var email= "test";
 	var item = new Object();
 	item.namaKorban = $("table").find("tr:eq(2)").find("td:eq(0)")[0].textContent;
-	item.jenisPekerjaan = $("table").find("tr:eq(5)").find("td:eq(0)")[0].textContent;
+	item.jenisPekerjaan = "";
 	item.lokasi = $("table").find("tr:eq(3)").find("td:eq(0)")[0].textContent;
 	item.tanggal = $("table").find("tr:eq(4)").find("td:eq(0)")[0].textContent;
 	item.apd = email;
@@ -19,7 +19,7 @@ $( document ).ready(function() {
 	item.bahan = email;
 	item.statusperalatan = email;
 	item.kesesuaianalat = email;
-	item.penjelasan = email;
+	item.penjelasan = $("table").find("tr:eq(5)").find("td:eq(0)")[0].textContent;
 	item.analisa = email;
 	item.koreksi = email;
 	item.tindakankorektif = email;

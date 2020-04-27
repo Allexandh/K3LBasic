@@ -22,7 +22,11 @@ $data = json_decode(base64_decode($request));
 $filename = "fileku.docx";
  $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('template/template.docx');
 
-$templateProcessor->setValue('firstname', 'John');
+$templateProcessor->setValue('name', $data->namaKorban);
+$templateProcessor->setValue('location', $data->lokasi);
+$templateProcessor->setValue('date', $data->tanggal);
+$templateProcessor->setValue('description', $data->penjelasan);
+
 header("Content-Disposition: attachment; filename=report.docx");
 ob_clean();
 $templateProcessor->saveAs('php://output');
