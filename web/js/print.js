@@ -1,7 +1,34 @@
 $( document ).ready(function() {
-	var data = (btoa($(".table-contents").html()));
+	$("table").css("width", "100%");
+	var id = "dawd";
+	var email= "test";
+	var item = new Object();
+	item.namaKorban = $("table").find("tr:eq(2)").find("td:eq(0)")[0].textContent;
+	item.jenisPekerjaan = $("table").find("tr:eq(5)").find("td:eq(0)")[0].textContent;
+	item.lokasi = $("table").find("tr:eq(3)").find("td:eq(0)")[0].textContent;
+	item.tanggal = $("table").find("tr:eq(4)").find("td:eq(0)")[0].textContent;
+	item.apd = email;
+	item.kesesuaian = email;
+	item.judulSOP = email;
+	item.noSOP = email;
+	item.revisiSOP = email;
+	item.kesesuaianSOP = email;
+	item.kebersihan = email;
+	item.kerapihan = email;
+	item.alat = email;
+	item.bahan = email;
+	item.statusperalatan = email;
+	item.kesesuaianalat = email;
+	item.penjelasan = email;
+	item.analisa = email;
+	item.koreksi = email;
+	item.tindakankorektif = email;
+	item.nilaikerugian = email;
+	item.evaluasi = email;
+	item.insidenditutup = email;
+	item.lampiran = email;
+	console.log(item);
+	var myString = JSON.stringify(item);
+	var data = (btoa(myString));
 	$("#tableencoded").val(data);
-	$('button[type="submit"]').on("click", function(){
-		console.log("test");
-	});
 });

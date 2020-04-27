@@ -127,8 +127,7 @@ class FormsController extends Controller
 	public function actionPrint()
     {
 		$request=Yii::$app->request->post('tableencoded');
-
-        return $this->render('print', [
+        return $this->renderPartial('print', [
             'request' => $request,
         ]);
     }
