@@ -8,7 +8,7 @@ use app\models\Images;
 /* @var $this yii\web\View */
 /* @var $model app\models\Forms */
 
-$this->title = $model->name;
+$this->title = $model->email;
 $this->params['breadcrumbs'][] = ['label' => 'Forms', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -19,8 +19,6 @@ $this->registerJsFile(
 );
 
  ?>
-
-
 
 <div class="forms-view">
 
@@ -37,32 +35,73 @@ $this->registerJsFile(
         ]) ?>
     </p>
     <p>
-	<?php $form = ActiveForm::begin(); ?>
 
-    <?php $form->action = "/index.php?r=forms%2Fprint" ?>
-	<input type="hidden" id="tableencoded" name="tableencoded" />
+    <?php $form = ActiveForm::begin(); ?>
+
+    <?php $form->action = "index.php?r=forms%2Fprint" ?>
+    <input type="hidden" id="tableencoded" name="tableencoded" />
     <div class="form-group">
         <?= Html::submitButton('Print Forms', ['class' => 'btn btn-danger']) ?>
     </div>
 
-	<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
     </p>
-	<div class="table-contents">
+    <div class="table-contents">
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'caseid',
+            //'caseid',
+            [
+                'label' => 'Nama',
+                'attribute' => 'Nama',
+                'value' => function($data){
+                    $model = User::find()->select('username')->where(['email' => (string) $data->email])->asArray()->limit(1)->all();
+                    if($model != NULL){
+                        return $model[0]['username'];
+                    }else{
+                        return "None";
+                    }
+                },
+            ],
             'phonenum',
-            'name',
+            //'name',
             'location',
             'tanggalwaktu',
             'description',
-            'gambar',
+            [
+                'attribute' => 'gambar',
+                'label' => 'Gambar',
+                'format' => 'html',
+                'value' => function($data){
+                    $imageLink = "";
+                    $images = Images::find()->where(['caseId' => (string) $data->caseid])->asArray()->limit(1)->all();
+                    foreach ($images as $img){
+                        return  "<img src=".Yii::$app->request->baseUrl.'/uploads/'.$img['imageFiles']."
+                        width='300px' height='auto'>";
+                    }
+                },
+                'header' => 'Gambar',
+            ],
             'casedue',
             'email:email',
             'status',
+            [
+               'label' => 'supervisor',
+                'attribute' => 'supervisor',
+                'value' => function($data){
+                    $model = User::find()->select('username, status_detail,email')->where(['email' => (string) $data->supervisor])->asArray()->limit(1)->all();
+                    if($model != NULL){
+                        return $model[0]['username']." - ".$model[0]['status_detail']." (".$model[0]['email'].")";
+                    }else{
+                        return "None";
+                    }
+                    
+                },
+            ],
         ],
     ]) ?>
-	</div>
+
+
+    </div>
 </div>

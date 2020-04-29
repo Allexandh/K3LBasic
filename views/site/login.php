@@ -78,7 +78,7 @@ $this->title = 'Login';
                             <!-- form action="" method="post"> -->
                                 <div class="form-group"> 
 
-                                    <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                                    <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
                                     
                                     <!-- <label>Email Address</label>

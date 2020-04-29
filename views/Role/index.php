@@ -86,6 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'header' => 'Roles',
             //'footer' => 'Gambar'
             ],
+            'status_detail',
             //'created_at',
             //'updated_at',
             //'verification_token',

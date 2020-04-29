@@ -13,7 +13,6 @@ use Yii;
  * @property string $location
  * @property string $tanggalwaktu
  * @property string $description
- * @property string $gambar
  * @property string $casedue
  * @property string $email
  * @property string $status
@@ -34,13 +33,13 @@ class Forms extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['phonenum', 'name', 'location', 'tanggalwaktu', 'description', 'gambar', 'casedue', 'email', 'status'], 'required'],
-            // [['caseId'],'int'],
+            [['phonenum', 'location', 'description'], 'required'],
+            [['caseid'],'integer'],
             [['tanggalwaktu', 'casedue'], 'safe'],
             [['phonenum'], 'string', 'max' => 20],
-            [['name'], 'string', 'max' => 50],
-            [['location', 'description', 'gambar', 'email'], 'string', 'max' => 100],
+            [['location', 'description', 'email'], 'string', 'max' => 100],
             [['status'], 'string', 'max' => 10],
+            [['supervisor'], 'string', 'max' => 30],
         ];
     }
 
@@ -51,12 +50,11 @@ class Forms extends \yii\db\ActiveRecord
     {
         return [
             'caseid' => 'Caseid',
-            'phonenum' => 'Phonenum',
-            'name' => 'Name',
+            'phonenum' => 'Phone Number',
             'location' => 'Location',
             'tanggalwaktu' => 'Tanggalwaktu',
             'description' => 'Description',
-            'gambar' => 'Gambar',
+            // 'gambar' => 'Gambar',
             'casedue' => 'Casedue',
             'email' => 'Email',
             'status' => 'Status',
@@ -68,18 +66,18 @@ class Forms extends \yii\db\ActiveRecord
         $forms = new Forms();
         //$forms->caseid = $this->caseid; auto increment
         $forms->phonenum = $this->phonenum;
-        $forms->name = $this->name;
         $forms->location = $this->location;
         $forms->description = $this->description;
-        $forms->gambar = "kosong";
-
-        $forms->email = "Email";
-
+        // $forms->gambar = "kosong";
+        $forms->email = Yii::$app->user->identity->email;
         $forms->tanggalwaktu = $time;
         $forms->casedue = $time;
-        $forms->status = "Process";
-        //echo $forms->name;
+        $forms->status = "Proses";
+        $forms->supervisor = "None";
         $forms->save();
+        // if($forms->save(false)){
+        //     echo "test 2";
+        // }
         return $forms->getId();
         //return $this->name;
     }
@@ -90,7 +88,7 @@ class Forms extends \yii\db\ActiveRecord
     }
 
     public function check(){
-        return $this->name;
+        return Yii::$app->user->identity->username;
         //return true;
     }
 

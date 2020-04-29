@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use app\models\User;
+use app\models\Forms;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\FormsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -52,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Forms', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-	<br>
+    <br>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -62,21 +63,35 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'caseid',
+            //'caseid',
+            [
+                'label' => 'Nama',
+                'attribute' => 'Nama',
+                'value' => function($data){
+                    $model = User::find()->select('username')->where(['email' => (string) $data->email])->asArray()->limit(1)->all();
+                    if($model != NULL){
+                        return $model[0]['username'];
+                    }else{
+                        return "None";
+                    }
+                    
+                },
+            ],
             'phonenum',
-            'name',
             'location',
-			[
-				'label' => 'Tanggal',
-				'attribute' => 'tanggalwaktu',
-				'value' => function($data){
-					return substr($data->tanggalwaktu, 0, -7);;
-				},
-			],            //'description',
+            'description',
+            [
+                'label' => 'Tanggal',
+                'attribute' => 'tanggalwaktu',
+                'value' => function($data){
+                    return substr($data->tanggalwaktu, 0, -7);;
+                },
+            ],            //'description',
             //'gambar',
             //'casedue',
             //'email:email',
             'status',
+            'supervisor',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

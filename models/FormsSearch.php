@@ -18,7 +18,7 @@ class FormsSearch extends Forms
     {
         return [
             [['caseid'], 'integer'],
-            [['phonenum', 'name', 'location', 'tanggalwaktu', 'description', 'gambar', 'casedue', 'email', 'status'], 'safe'],
+            [['phonenum', 'location', 'tanggalwaktu', 'description', 'casedue', 'email', 'status','supervisor'], 'safe'],
         ];
     }
 
@@ -64,12 +64,11 @@ class FormsSearch extends Forms
         ]);
 
         $query->andFilterWhere(['like', 'phonenum', $this->phonenum])
-            ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'location', $this->location])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'gambar', $this->gambar])
             ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'supervisor', $this->supervisor]);
 
         return $dataProvider;
     }

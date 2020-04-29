@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Forms;
 use app\models\FormsSearch;
+use app\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -52,8 +53,11 @@ class FormsController extends Controller
      */
     public function actionView($id)
     {
+        //$user = User::findAllUser2();
+        $model = $this->findModel($id);
+        //$user = User::findStatus($model->supervisor);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model
         ]);
     }
 
@@ -85,13 +89,15 @@ class FormsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $user = User::findAllUser();
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->caseid]);
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'model' => $model,'user' => $user,
         ]);
     }
 
@@ -124,9 +130,9 @@ class FormsController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-	public function actionPrint()
+    public function actionPrint()
     {
-		$request=Yii::$app->request->post('tableencoded');
+        $request=Yii::$app->request->post('tableencoded');
         return $this->renderPartial('print', [
             'request' => $request,
         ]);

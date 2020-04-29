@@ -9,7 +9,7 @@ use app\models\Images;
 $dataProvider = new ActiveDataProvider([
         'query' => Forms::find(),
         'pagination' => [
-            'pageSize' => 10,
+            'pageSize' => 5,
         ],
         //'pagination' => false,
         'sort' =>[
@@ -35,7 +35,7 @@ $this->title = 'My Yii Application';
 					
 					<!-- <p class="lead">You have successfully created your Yii-powered application....</p> -->
 
-					<p><a class="btn btn-lg btn-success" href="/index.php?r=site%2Fform">ISI FORM</a></p>
+					<p><a class="btn btn-lg btn-success" href="index.php?r=site%2Fform">ISI FORM</a></p>
 				</div>
 
 				<div class="body-content">
@@ -103,7 +103,7 @@ $this->title = 'My Yii Application';
 											},
 										],
 										[
-											'attribute' => 'gambar',
+											//'attribute' => 'gambar',
 											'label' => 'Gambar',
 											'format' => 'html',
 											'value' => function($data){
@@ -121,11 +121,7 @@ $this->title = 'My Yii Application';
 											'attribute' => 'status',
 											'label' => 'Status',
 											'value' => function($data){
-												if($data->status == 'Process'){
-													return 'Process';
-												}else{
-													return 'Done';
-												}
+												return $data->status;
 											},
 											//'visible' => true,
 											'header' => 'Status',
