@@ -38,7 +38,7 @@ class Forms extends \yii\db\ActiveRecord
             [['tanggalwaktu', 'casedue'], 'safe'],
             [['phonenum'], 'string', 'max' => 20],
             [['location', 'description', 'email'], 'string', 'max' => 100],
-            [['status'], 'string', 'max' => 10],
+            [['status'], 'string', 'max' => 20],
             [['supervisor'], 'string', 'max' => 30],
         ];
     }
@@ -72,7 +72,7 @@ class Forms extends \yii\db\ActiveRecord
         $forms->email = Yii::$app->user->identity->email;
         $forms->tanggalwaktu = $time;
         $forms->casedue = $time;
-        $forms->status = "Proses";
+        $forms->status = "Pemeriksaan";
         $forms->supervisor = "None";
         $forms->save();
         // if($forms->save(false)){

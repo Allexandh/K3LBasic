@@ -147,7 +147,7 @@ class SiteController extends Controller
             //$images->saveData($id,$time);//buat save data gambar yang diupload
 
             if ($model->check(Yii::$app->request->post())) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
+                Yii::$app->session->setFlash('success', 'Thank you for contacting us.');
             } else {
                 Yii::$app->session->setFlash('error', 'There was an error sending your message.');
             }

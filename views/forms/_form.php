@@ -25,7 +25,7 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'casedue')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status')->dropDownList(
-            ['Proses' => 'Proses', 'Selesai' => 'Selesai']) ?>
+            ['Pemeriksaan' => 'Pemeriksaan', 'Proses' => 'Proses', 'Selesai' => 'Selesai', 'Batal' => 'Batal']) ?>
 
     <?php 
         echo $form->field($model, 'supervisor')->dropDownList(
