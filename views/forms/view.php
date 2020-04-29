@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
-
+use app\models\User;
+use app\models\Images;
 /* @var $this yii\web\View */
 /* @var $model app\models\Forms */
 
