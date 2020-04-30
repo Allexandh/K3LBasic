@@ -6,6 +6,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Forms;
 use app\models\Images;
 
+
 $dataProvider = new ActiveDataProvider([
         'query' => Forms::find(),
         'pagination' => [
@@ -99,7 +100,8 @@ $this->title = 'My Yii Application';
 											'label' => 'Tanggal',
 											'attribute' => 'tanggalwaktu',
 											'value' => function($data){
-												return substr($data->tanggalwaktu, 0, -7);;
+												//return substr($data->tanggalwaktu, 0, -7);;
+												return $data->tanggalwaktu;
 											},
 										],
 										[

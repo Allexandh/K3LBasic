@@ -139,10 +139,14 @@ class SiteController extends Controller
             $images->imageFiles = UploadedFile::getInstances($images, 'imageFiles');
 
             date_default_timezone_set('Asia/Jakarta');
-            $time = date('Y-m-d_H-i-s');
-
-            $id = $model->saveData($time);//buat save data formnya
-            $images->upload($id,$time);//buat upload gambar di folder
+            $time = new \DateTime();
+            $times = $time->format("Y-m-d_H-i-s");
+            $time->modify("+5 day");
+            $casedue = $time->format("Y-m-d_H-i-s");
+            //$time = date('Y-m-d_H-i-s');
+            // echo $time->format("Y-m-d_H-i-s");
+            $id = $model->saveData($times, $casedue);//buat save data formnya
+            $images->upload($id,$times);//buat upload gambar di folder
             //$id = $model->getId();
             //$images->saveData($id,$time);//buat save data gambar yang diupload
 

@@ -84,7 +84,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Tanggal',
                 'attribute' => 'tanggalwaktu',
                 'value' => function($data){
-                    return substr($data->tanggalwaktu, 0, -7);;
+                    //return substr($data->tanggalwaktu, 0, -7);
+                    return $data->tanggalwaktu;
                 },
             ],            //'description',
             //'gambar',

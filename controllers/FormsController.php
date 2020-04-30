@@ -92,8 +92,21 @@ class FormsController extends Controller
         $user = User::findAllUser();
 
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->caseid]);
+        if ($model->load(Yii::$app->request->post()) ) {
+            if($model->supervisor != 'None'){
+                date_default_timezone_set('Asia/Jakarta');
+                $time = new \DateTime();
+                $time->modify("+5 day");
+                $model->casedue = $time->format("Y-m-d_H-i-s");
+            }
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->caseid]);
+            }
+            // echo "<br>";echo "<br>";echo "<br>";echo "<br>";echo "<br>";echo "<br>";
+            // var_dump(Yii::$app->request->post());
+            // echo Yii::$app->request->post("status");
+            // echo "asd";
+            
         }
 
         return $this->render('update', [

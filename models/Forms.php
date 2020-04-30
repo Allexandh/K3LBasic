@@ -62,16 +62,15 @@ class Forms extends \yii\db\ActiveRecord
     }
 
 
-    public function saveData($time){
+    public function saveData($time, $casedue){
         $forms = new Forms();
-        //$forms->caseid = $this->caseid; auto increment
         $forms->phonenum = $this->phonenum;
         $forms->location = $this->location;
         $forms->description = $this->description;
-        // $forms->gambar = "kosong";
         $forms->email = Yii::$app->user->identity->email;
         $forms->tanggalwaktu = $time;
-        $forms->casedue = $time;
+        //$forms->casedue = $casedue;
+        $forms->casedue = 0;
         $forms->status = "Pemeriksaan";
         $forms->supervisor = "None";
         $forms->save();
@@ -79,7 +78,6 @@ class Forms extends \yii\db\ActiveRecord
         //     echo "test 2";
         // }
         return $forms->getId();
-        //return $this->name;
     }
 
     public function getForms(){

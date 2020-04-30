@@ -84,7 +84,7 @@ $this->registerJsFile(
                 'header' => 'Gambar',
             ],
             'casedue',
-            'email:email',
+            'email',
             'status',
             [
                'label' => 'supervisor',
