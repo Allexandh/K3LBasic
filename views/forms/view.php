@@ -55,20 +55,7 @@ $this->registerJsFile(
         'model' => $model,
         'attributes' => [
             //'caseid',
-            [
-                'label' => 'Notes from Admin',
-                'value' => function ($model){
-                    $notes = Notes::noteSearch($model->id,1);
-                    return $notes['notes'];
-                }
-            ],
-            [
-                'label' => 'Notes from Supervisor',
-                'value' => function ($model){
-                    $notes = Notes::noteSearch($model->id,2);
-                    return $notes['notes'];
-                }
-            ],
+
             [
                 'label' => 'Nama',
                 'attribute' => 'Nama',
@@ -116,6 +103,20 @@ $this->registerJsFile(
                     }
                     
                 },
+            ],
+            [
+                'label' => 'Notes from Admin',
+                'value' => function ($model){
+                    $notes = Notes::noteSearch($model->id,1);
+                    return $notes['notes'];
+                }
+            ],
+            [
+                'label' => 'Notes from Supervisor',
+                'value' => function ($model){
+                    $notes = Notes::noteSearch($model->id,2);
+                    return $notes['notes'];
+                }
             ],
         ],
     ]) ?>
