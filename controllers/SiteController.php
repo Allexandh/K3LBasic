@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\UploadForm;
+use app\models\Notes;
 //use app\models\Forms;
 
 class SiteController extends Controller
@@ -133,6 +134,7 @@ class SiteController extends Controller
     {
         $model = new \app\models\Forms();
         $images = new \app\models\UploadForm();
+        $notes = new Notes();
 
         if ($model->load(Yii::$app->request->post())) {
             //var_dump(Yii::$app->request->post());
@@ -147,6 +149,8 @@ class SiteController extends Controller
             // echo $time->format("Y-m-d_H-i-s");
             $id = $model->saveData($times, $casedue);//buat save data formnya
             $images->upload($id,$times);//buat upload gambar di folder
+            $notes->createNotes($id,'1');
+            $notes->createNotes($id,'2');
             //$id = $model->getId();
             //$images->saveData($id,$time);//buat save data gambar yang diupload
 

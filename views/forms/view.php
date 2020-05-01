@@ -5,6 +5,7 @@ use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
 use app\models\User;
 use app\models\Images;
+use app\models\Notes;
 /* @var $this yii\web\View */
 /* @var $model app\models\Forms */
 
@@ -19,6 +20,8 @@ $this->registerJsFile(
 );
 
  ?>
+
+
 
 <div class="forms-view">
 
@@ -53,6 +56,20 @@ $this->registerJsFile(
         'attributes' => [
             //'caseid',
             [
+                'label' => 'Notes from Admin',
+                'value' => function ($model){
+                    $notes = Notes::noteSearch($model->id,1);
+                    return $notes['notes'];
+                }
+            ],
+            [
+                'label' => 'Notes from Supervisor',
+                'value' => function ($model){
+                    $notes = Notes::noteSearch($model->id,2);
+                    return $notes['notes'];
+                }
+            ],
+            [
                 'label' => 'Nama',
                 'attribute' => 'Nama',
                 'value' => function($data){
@@ -62,6 +79,7 @@ $this->registerJsFile(
                     }else{
                         return "None";
                     }
+                    
                 },
             ],
             'phonenum',

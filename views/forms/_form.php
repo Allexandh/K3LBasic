@@ -12,6 +12,27 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin(); ?>
 
+<?php
+    //var_dump($notes);
+
+?>
+    <?php
+        foreach ($notes as $index => $note) {
+            if(Yii::$app->user->identity->status == "Admin"){
+                if($note->source == 1){
+                    echo $form->field($note, "[$index]notes")->label("Notes From Admin");
+                }else{
+                    echo $form->field($note, "[$index]notes")->label("Notes From Supervisor")->textInput(['readonly'=> true]);
+                }
+            }else{
+                if($note->source == 1){
+                    echo $form->field($note, "[$index]notes")->label("Notes From Admin")->textInput(['readonly'=> true]);
+                }else{
+                    echo $form->field($note, "[$index]notes")->label("Notes From Supervisor");
+                }
+            }
+        }
+    ?>
     <?= $form->field($model, 'email')->textInput(['readonly'=> true,'maxlength' => true]) ?>
 
     <?= $form->field($model, 'phonenum')->textInput(['readonly'=> true,'maxlength' => true]) ?>

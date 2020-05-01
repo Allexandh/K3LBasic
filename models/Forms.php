@@ -97,8 +97,11 @@ class Forms extends \yii\db\ActiveRecord
     }
 
     public function getImages()
-{
-    return $this->hasOne(Images::className(), ['caseId'=> 'caseid']);
-}
+    {
+        return $this->hasOne(Images::className(), ['caseId'=> 'caseid']);
+    }
+    // public function getNotes(){
+    //     return $this->hasOne(Notes::className(),['formid'=>'caseid']);
+    // }
 
 }
