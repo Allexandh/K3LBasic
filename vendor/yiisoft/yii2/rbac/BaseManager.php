@@ -178,7 +178,9 @@ abstract class BaseManager extends Component implements ManagerInterface
     public function getRole($name)
     {
         $item = $this->getItem($name);
+        echo $item->type;
         return $item instanceof Item && $item->type == Item::TYPE_ROLE ? $item : null;
+        
     }
 
     /**

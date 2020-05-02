@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Update Forms: ' . $model->email;
 $this->params['breadcrumbs'][] = ['label' => 'Forms', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->email, 'url' => ['view', 'id' => $model->caseid]];
+$this->params['breadcrumbs'][] = ['label' => $model->email, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="forms-update">

@@ -92,7 +92,7 @@ $this->registerJsFile(
             'email',
             'status',
             [
-               'label' => 'supervisor',
+               'label' => 'Supervisor',
                 'attribute' => 'supervisor',
                 'value' => function($data){
                     $model = User::find()->select('username, status_detail,email')->where(['email' => (string) $data->supervisor])->asArray()->limit(1)->all();

@@ -104,7 +104,7 @@ class FormsController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->user->can('update-alldataform')){
+        if(Yii::$app->user->can('update-statusform')){
             $model = $this->findModel($id);
             $user = User::findAllUser();
             $notes = Notes::find()->where(['formid'=>$id])->indexBy('id')->all();
@@ -131,14 +131,6 @@ class FormsController extends Controller
                 }
             }
 
-            return $this->render('update', [
-                'model' => $model,'user' => $user,'notes'=>$notes,
-            ]);
-        }else if(Yii::$app->user->can('update-statusform')){
-            //return $this->redirect(['/site/index']);
-            $model = $this->findModel($id);
-            $user = User::findAllUser();
-            $notes = Notes::find()->where(['formid'=>$id])->indexBy('id')->all();
             return $this->render('update', [
                 'model' => $model,'user' => $user,'notes'=>$notes,
             ]);
@@ -173,6 +165,8 @@ class FormsController extends Controller
      * @return Forms the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+
     protected function findModel($id)
     {
         if (($model = Forms::findOne($id)) !== null) {

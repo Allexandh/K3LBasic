@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
               'class' => 'yii\grid\ActionColumn',
               'header' => 'Actions',
               //'headerOptions' => ['style' => 'color:#337ab7'],
-              'template' => '{view}{update}{delete}',
+              'template' => '{view}{update}',
               'buttons' => [
                 'view' => function ($url, $model) {
                     return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, [
@@ -108,27 +108,27 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'title' => Yii::t('app', 'Update'),
                     ]);
                 },
-                'delete' => function ($url, $model) {
-                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-                                'title' => Yii::t('app', 'Delete'),
-                    ]);
-                }
+                // 'delete' => function ($url, $model) {
+                //     return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                //                 'title' => Yii::t('app', 'Delete'),
+                //     ]);
+                // }
 
               ],
               'urlCreator' => function ($action, $model, $key, $index) {
                 if ($action === 'view') {
-                    $url ='index.php?r=role/view&id='.$model->id;
+                    $url ='index.php?r=role/view&email='.$model->email;
                     return $url;
                 }
 
                 if ($action === 'update') {
-                    $url ='index.php?r=role/update&id='.$model->id;
+                    $url ='index.php?r=role/update&email='.$model->email;
                     return $url;
                 }
-                if ($action === 'delete') {
-                    $url ='index.php?r=role/delete&id='.$model->id;
-                    return $url;
-                }
+                // if ($action === 'delete') {
+                //     $url ='index.php?r=role/delete&id='.$model->id;
+                //     return $url;
+                // }
 
               }
           ],

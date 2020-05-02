@@ -77,14 +77,14 @@ $this->title = 'Isi Form';
                 <div class="row form-group">
 
                     <div class="col-12 col-md-12">
-                        <?= $form->field($model, 'phonenum') ?>
+                        <?= $form->field($model, 'phonenum')->textinput()->input('phonenum',['placeholder' => "08123456789"]) ?>
 
                     </div>
                 </div>
                 <div class="row form-group">
 
                     <div class="col-12 col-sm-12">
-                        <?= $form->field($model, 'location') ?>
+                        <?= $form->field($model, 'location')->textinput()->input('phonenum',['placeholder' => "Gedung A, Lantai 3 Ruangan 303"]) ?>
 
                     </div>
                 </div>
@@ -92,7 +92,7 @@ $this->title = 'Isi Form';
                 <div class="row form-group">
 
                     <div class="col-12 col-sm-12">
-                        <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>       
+                        <?= $form->field($model, 'description')->textarea(['rows' => 6])->textinput()->input('phonenum',['placeholder' => "Lantai Retak"]) ?>       
 
                     </div>
                 </div>

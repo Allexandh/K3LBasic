@@ -27,7 +27,13 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'description')->textInput(['readonly'=> true,'maxlength' => true]) ?>
 
-    <?= $form->field($model, 'casedue')->textInput(['maxlength' => true]) ?>
+    <?php 
+    if(Yii::$app->user->identity->status == "Admin"){
+        echo $form->field($model, 'casedue')->textInput(['maxlength' => true]);
+    }else{
+        echo $form->field($model, 'casedue')->textInput(['readonly'=> true,'maxlength' => true]);
+    }
+    ?>
 
 
     <?= $form->field($model, 'status')->dropDownList(
@@ -35,10 +41,13 @@ use yii\helpers\ArrayHelper;
     ?>
 
     <?php 
-        echo $form->field($model, 'supervisor')->dropDownList(
-        $user,
-        ['prompt'=>'Select...']
-        );
+        if(Yii::$app->user->identity->status == "Admin"){
+            echo $form->field($model, 'supervisor')->dropDownList(
+            $user,
+            ['prompt'=>'Select...']
+            );
+        }
+        
     ?>
 
     <?php
