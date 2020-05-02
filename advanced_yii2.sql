@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2020 at 07:47 AM
+-- Generation Time: May 02, 2020 at 03:42 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -21,6 +21,125 @@ SET time_zone = "+00:00";
 --
 -- Database: `advanced_yii2`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_assignment`
+--
+
+CREATE TABLE `auth_assignment` (
+  `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_assignment`
+--
+
+INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
+('Admin', '10', NULL),
+('Admin', '31', NULL),
+('Admin', '4', NULL),
+('Guests', '11', NULL),
+('Guests', '3', 1588426905),
+('Guests', '32', NULL),
+('Supervisor', '15', NULL),
+('Supervisor', '16', NULL),
+('Supervisor', '17', NULL),
+('Supervisor', '18', NULL),
+('Supervisor', '19', 1588426127),
+('Supervisor', '20', NULL),
+('Supervisor', '21', NULL),
+('Supervisor', '22', NULL),
+('Supervisor', '23', NULL),
+('Supervisor', '24', NULL),
+('Supervisor', '25', NULL),
+('Supervisor', '26', NULL),
+('Supervisor', '27', NULL),
+('Supervisor', '28', NULL),
+('Supervisor', '29', NULL),
+('Supervisor', '30', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_item`
+--
+
+CREATE TABLE `auth_item` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `type` smallint(6) NOT NULL,
+  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `rule_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `data` blob DEFAULT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_item`
+--
+
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+('Admin', 1, 'Bisa semuanya', NULL, NULL, NULL, NULL),
+('create-form', 2, 'Bisa membuat form', NULL, NULL, NULL, NULL),
+('delete-form', 1, 'Bisa delete form', NULL, NULL, NULL, NULL),
+('Guests', 1, 'Bisa isi form, lihat form', NULL, NULL, NULL, NULL),
+('login', 2, 'Bisa login', NULL, NULL, NULL, NULL),
+('Supervisor', 1, 'Bisa ubah status form', NULL, NULL, NULL, NULL),
+('update-role', 1, 'Bisa update role', NULL, NULL, NULL, NULL),
+('update-statusform', 2, 'Bisa ubah status form', NULL, NULL, NULL, NULL),
+('view-form', 2, 'Bisa melihat daftar form', NULL, NULL, NULL, NULL),
+('view-home', 2, 'Bisa lihat home', NULL, NULL, NULL, NULL),
+('view-role', 1, 'Bisa melihat role', NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_item_child`
+--
+
+CREATE TABLE `auth_item_child` (
+  `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_item_child`
+--
+
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+('Admin', 'create-form'),
+('Admin', 'delete-form'),
+('Admin', 'login'),
+('Admin', 'update-role'),
+('Admin', 'update-statusform'),
+('Admin', 'view-form'),
+('Admin', 'view-home'),
+('Admin', 'view-role'),
+('Guests', 'create-form'),
+('Guests', 'login'),
+('Guests', 'view-home'),
+('Supervisor', 'create-form'),
+('Supervisor', 'login'),
+('Supervisor', 'update-statusform'),
+('Supervisor', 'view-form'),
+('Supervisor', 'view-home');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_rule`
+--
+
+CREATE TABLE `auth_rule` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `data` blob DEFAULT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -45,13 +164,16 @@ CREATE TABLE `forms` (
 --
 
 INSERT INTO `forms` (`caseid`, `phonenum`, `location`, `tanggalwaktu`, `description`, `casedue`, `email`, `status`, `supervisor`) VALUES
-(92, '111', 'Rumah', '2020-05-01 12:17:03', 'Rumah', '2020-05-06 12:38:12', 'suryo@umn.ac.id', 'Proses', 'farica@umn.ac.id'),
+(92, '111', 'Rumah', '2020-05-01 12:17:03', 'Rumah', '2020-05-07 20:38:47', 'suryo@umn.ac.id', 'Selesai', 'farica@umn.ac.id'),
 (93, '22', 'asd', '2020-05-01 12:18:04', 'asd', '2020-05-06 12:33:02', 'suryo@umn.ac.id', 'Pemeriksaan', 'MAHTU IHSAN, S.Kom.'),
 (94, '654', 'asd', '2020-05-01 12:18:55', 'asda', '0000-00-00 00:00:00', 'suryo@umn.ac.id', 'Pemeriksaan', 'None'),
 (95, '33', 'asd', '2020-05-01 12:19:05', 'asd', '2020-05-06 12:33:27', 'suryo@umn.ac.id', 'Selesai', 'oqke.prawira@umn.ac.id'),
 (96, '33', '33', '2020-05-01 12:19:31', '33', '2020-05-06 12:33:41', 'suryo@umn.ac.id', 'Proses', 'aryo.gurmilang@umn.ac.id'),
 (97, '22', '22', '2020-05-01 12:20:04', '22', '2020-05-06 12:30:08', 'suryo@umn.ac.id', 'Pemeriksaan', 'None'),
-(98, '99', '99', '2020-05-01 12:34:07', '99', '2020-05-06 12:35:45', 'admin@admin.com', 'Proses', 'None');
+(98, '99', '99', '2020-05-01 12:34:07', '99', '2020-05-06 12:35:45', 'admin@admin.com', 'Proses', 'None'),
+(99, '55555', 'Percobaan Pertama_1', '2020-05-02 16:53:55', 'Percobaan Pertama_2', '0000-00-00 00:00:00', 'muzaki@student.umn.ac.id', 'Pemeriksaan', 'None'),
+(100, '66666', 'Percobaan Kedua_1', '2020-05-02 16:54:39', 'Percobaan Kedua_2', '0000-00-00 00:00:00', 'suryo@umn.ac.id', 'Pemeriksaan', 'None'),
+(101, '77777', 'Percobaan Ketiga_1', '2020-05-02 17:26:48', 'Percobaan Ketiga_2', '2020-05-07 17:27:09', 'admin@admin.com', 'Proses', 'farica@umn.ac.id');
 
 -- --------------------------------------------------------
 
@@ -170,7 +292,31 @@ INSERT INTO `images` (`caseId`, `imageFiles`) VALUES
 ('95', '95_2020-05-01_12-19-05_1.png'),
 ('96', '96_2020-05-01_12-19-31_1.png'),
 ('97', '97_2020-05-01_12-20-04_1.png'),
-('98', '98_2020-05-01_12-34-07_1.png');
+('98', '98_2020-05-01_12-34-07_1.png'),
+('99', '99_2020-05-02_16-53-55_1.jpg'),
+('100', '100_2020-05-02_16-54-39_1.jpg'),
+('101', '101_2020-05-02_17-26-48_1.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migration`
+--
+
+CREATE TABLE `migration` (
+  `version` varchar(180) NOT NULL,
+  `apply_time` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `migration`
+--
+
+INSERT INTO `migration` (`version`, `apply_time`) VALUES
+('m000000_000000_base', 1588409792),
+('m140506_102106_rbac_init', 1588409795),
+('m170907_052038_rbac_add_index_on_auth_assignment_user_id', 1588409795),
+('m180523_151638_rbac_updates_indexes_without_prefix', 1588409795);
 
 -- --------------------------------------------------------
 
@@ -190,8 +336,8 @@ CREATE TABLE `notes` (
 --
 
 INSERT INTO `notes` (`id`, `formid`, `notes`, `source`) VALUES
-(1, '92', 'kerjain yaks', '1'),
-(2, '92', 'zzssadee', '2'),
+(1, '92', 'kerjain yak', '1'),
+(2, '92', 'oke deh pak', '2'),
 (3, '93', 'okey', '1'),
 (4, '93', 'sdsd', '2'),
 (5, '94', 'masih ada waktu', '1'),
@@ -203,7 +349,13 @@ INSERT INTO `notes` (`id`, `formid`, `notes`, `source`) VALUES
 (11, '97', 'kerjain', '1'),
 (12, '97', 'ddd', '2'),
 (13, '98', 'kerjain ya', '1'),
-(14, '98', '', '2');
+(14, '98', '', '2'),
+(15, '99', '', '1'),
+(16, '99', '', '2'),
+(17, '100', '', '1'),
+(18, '100', '', '2'),
+(19, '101', 'Kerjain ya CI', '1'),
+(20, '101', '', '2');
 
 -- --------------------------------------------------------
 
@@ -226,11 +378,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password`, `email`, `status`, `status_detail`) VALUES
-(3, 'muzaki', 'hL_UzmU2Lo65k3EYR5QlIgHNxzoksomz', '76ee59a71c612fb0ae3d0e12b5ce409c8ea7e46b', 'muzaki@student.umn.ac.id', 'Guest', 'Mahasiswa'),
+(3, 'muzaki', 'hL_UzmU2Lo65k3EYR5QlIgHNxzoksomz', '76ee59a71c612fb0ae3d0e12b5ce409c8ea7e46b', 'muzaki@student.umn.ac.id', 'Guests', 'Mahasiswa'),
 (4, 'alexander', 'LZ95RJSaYTs6AuCpJ2kkl6AhE7qUPlZF', 'e46fc836cca3acec03944314d1457c2ae6c68ef3', 'axander90@yahoo.com', 'Admin', 'Admin'),
 (10, 'admin', 'yYAwtG0KrzoUvOIj7nQMgmBpHsG8eJLW', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin@admin.com', 'Admin', 'Admin'),
-(11, 'userbaru', 'ILtjQ1OS1z0JzCX9KpZDF3gqkHjcd6qY', 'a111a99437b44a45fd81deab87125ad34d5bb7b1', 'userbaru@user.com', 'Guest', 'Mahasiswa'),
-(15, 'test', 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'test@gmail.com', 'Guest', 'Mahasiswa'),
+(11, 'userbaru', 'ILtjQ1OS1z0JzCX9KpZDF3gqkHjcd6qY', 'a111a99437b44a45fd81deab87125ad34d5bb7b1', 'userbaru@user.com', 'Guests', 'Mahasiswa'),
+(15, 'test', 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'test@gmail.com', 'Admin', 'Mahasiswa'),
 (16, 'SUDARMAN SUTANTO', 'random', '09e60797a7c2a03c4d73a3d70e3cdaa3d32a7172', 'sudarman_sutanto@umn.ac.id', 'Supervisor', 'BM Manager'),
 (17, 'ANTONIUS SURYADI, S.T.', 'random', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'suryo@umn.ac.id', 'Supervisor', 'BM Superintendent'),
 (18, 'C. ERVIN SETYO CAHYADI, S.Pd.', 'random', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'ervin@umn.ac.id', 'Supervisor', 'ME Superintendent'),
@@ -247,17 +399,51 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password`, `email`, `status`,
 (29, 'IGNATIUS DE LOYOLA ARYO GURMILANG, S.S.', 'random', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'aryo.gurmilang@umn.ac.id', 'Supervisor', 'Int.Student Affair'),
 (30, 'ANDRI SETO BASKORO, S.Pd.', 'random', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'seto.baskoro@umn.ac.id', 'Supervisor', 'Int.Student Affair'),
 (31, 'NUR SAYIDATUNNISA, S.Si.', 'random', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'nur.sayidatunnisa@umn.ac.id', 'Admin', 'K3L Officer'),
-(32, 'STEFANUS BAMBANG WIDIATNOLO, S.T.', 'random', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'b.widiatnolo@umn.ac.id', 'Guest', 'BPMI MANAGER');
+(32, 'STEFANUS BAMBANG WIDIATNOLO, S.T.', 'random', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'b.widiatnolo@umn.ac.id', 'Guests', 'BPMI MANAGER');
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `auth_assignment`
+--
+ALTER TABLE `auth_assignment`
+  ADD PRIMARY KEY (`item_name`,`user_id`),
+  ADD KEY `idx-auth_assignment-user_id` (`user_id`);
+
+--
+-- Indexes for table `auth_item`
+--
+ALTER TABLE `auth_item`
+  ADD PRIMARY KEY (`name`),
+  ADD KEY `rule_name` (`rule_name`),
+  ADD KEY `idx-auth_item-type` (`type`);
+
+--
+-- Indexes for table `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+  ADD PRIMARY KEY (`parent`,`child`),
+  ADD KEY `child` (`child`);
+
+--
+-- Indexes for table `auth_rule`
+--
+ALTER TABLE `auth_rule`
+  ADD PRIMARY KEY (`name`);
+
+--
 -- Indexes for table `forms`
 --
 ALTER TABLE `forms`
   ADD PRIMARY KEY (`caseid`);
+
+--
+-- Indexes for table `migration`
+--
+ALTER TABLE `migration`
+  ADD PRIMARY KEY (`version`);
 
 --
 -- Indexes for table `notes`
@@ -281,19 +467,42 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `forms`
 --
 ALTER TABLE `forms`
-  MODIFY `caseid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `caseid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `auth_assignment`
+--
+ALTER TABLE `auth_assignment`
+  ADD CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `auth_item`
+--
+ALTER TABLE `auth_item`
+  ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+  ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
