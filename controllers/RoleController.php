@@ -124,48 +124,24 @@ class RoleController extends Controller
         if(Yii::$app->user->can('update-role')){
             $model = $this->findModelEmail($email);
 
-                //var_dump($model->load(Yii::$app->request->post('id')));
-
             $emails = $model->email;
             $status = $model->status;
             $id = User::find()->select('id')->where(['email'=>$emails])->one();
 
             $oldStatus = AuthAssignment::find()->select(['item_name'])->where(['user_id'=>$id])->one();
-            // echo "<br><br><br><br>sebelum";
-            // //var_dump($tes['item_name']);
-            // echo $id['id']."<br>";
-            // echo $status."<br>";
-            // echo $oldStatus['item_name']."<br>";
-            // echo "<br><br><br><br>";
 
             if ($model->load(Yii::$app->request->post())) {
-                //echo "Up";
-                //print_r($_POST);
-
 
                 
-                // $authass = AuthAssignment::findOne(['user_id'=>$id]);
-                // //$authass = new AuthAssignment();
-                //$authass->item_name=$status;
-                // $authass->user_id=$id;
-                // $authass->created_at=111;
-                // var_dump($authass);
-                // $authass->save();
                 $status = $model->status;
                 $manager = Yii::$app->authManager;
                 $item = $manager->getRole($oldStatus['item_name']);
                 $item = $item ? : $manager->getPermission('Admin');
                 $manager->revoke($item,$id['id']);
 
-    
-                // echo $id['id']."<br>";
-                // echo $status."<br>";
-                // echo $oldStatus['item_name']."<br>";
-                // echo "<br><br><br><br>";
                 $authorRole = $manager->getRole($status);
                 $manager->assign($authorRole, $id['id']);
 
-                //Yii::$app->authManager->revoke($item , '3' );
                 $model->save();
                 return $this->redirect(['view', 'email' => $model->email]);
             }
