@@ -41,7 +41,6 @@ class FormsSearch extends Forms
     public function search($params)
     {
         $query = Forms::find();
-
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

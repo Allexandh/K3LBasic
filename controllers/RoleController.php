@@ -35,14 +35,18 @@ class RoleController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new RoleSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->user->can('view-role')){
+            $searchModel = new RoleSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        //var_dump($dataProvider);
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            //var_dump($dataProvider);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            return $this->redirect(['/site/login']);
+        }
     }
 
     /**
@@ -53,13 +57,14 @@ class RoleController extends Controller
      */
     public function actionView($id)
     {
-        //echo $email;
-        //var_dump($this->findModel($email));
-        //var_dump($this->tes());
-        //var_dump($tes);
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can('view-role')){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            return $this->redirect(['/site/login']);
+        }
+        
     }
 
     protected function findModel($id)
@@ -101,15 +106,19 @@ class RoleController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if(Yii::$app->user->can('update-role')){
+            $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }else{
+            return $this->redirect(['/site/login']);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -121,8 +130,7 @@ class RoleController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        //$this->findModel($id)->delete();
         return $this->redirect(['index']);
     }
 

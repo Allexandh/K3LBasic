@@ -65,7 +65,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        if(Yii::$app->user->can('view-home')){
+            return $this->render('index');
+        }else{
+            return $this->redirect(['/site/login']);
+        }
     }
 
     /**
@@ -132,44 +136,49 @@ class SiteController extends Controller
 
     public function actionForm()
     {
-        $model = new \app\models\Forms();
-        $images = new \app\models\UploadForm();
-        $notes = new Notes();
+        if(Yii::$app->user->can('create-form')){
+            $model = new \app\models\Forms();
+            $images = new \app\models\UploadForm();
+            $notes = new Notes();
 
-        if ($model->load(Yii::$app->request->post())) {
-            //var_dump(Yii::$app->request->post());
-            $images->imageFiles = UploadedFile::getInstances($images, 'imageFiles');
+            if ($model->load(Yii::$app->request->post())) {
+                //var_dump(Yii::$app->request->post());
+                $images->imageFiles = UploadedFile::getInstances($images, 'imageFiles');
 
-            date_default_timezone_set('Asia/Jakarta');
-            $time = new \DateTime();
-            $times = $time->format("Y-m-d_H-i-s");
-            $time->modify("+5 day");
-            $casedue = $time->format("Y-m-d_H-i-s");
-            //$time = date('Y-m-d_H-i-s');
-            // echo $time->format("Y-m-d_H-i-s");
-            $id = $model->saveData($times, $casedue);//buat save data formnya
-            $images->upload($id,$times);//buat upload gambar di folder
-            $notes->createNotes($id,'1');
-            $notes->createNotes($id,'2');
-            //$id = $model->getId();
-            //$images->saveData($id,$time);//buat save data gambar yang diupload
+                date_default_timezone_set('Asia/Jakarta');
+                $time = new \DateTime();
+                $times = $time->format("Y-m-d_H-i-s");
+                $time->modify("+5 day");
+                $casedue = $time->format("Y-m-d_H-i-s");
+                //$time = date('Y-m-d_H-i-s');
+                // echo $time->format("Y-m-d_H-i-s");
+                $id = $model->saveData($times, $casedue);//buat save data formnya
+                $images->upload($id,$times);//buat upload gambar di folder
+                $notes->createNotes($id,'1');
+                $notes->createNotes($id,'2');
+                //$id = $model->getId();
+                //$images->saveData($id,$time);//buat save data gambar yang diupload
 
-            if ($model->check(Yii::$app->request->post())) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us.');
+                if ($model->check(Yii::$app->request->post())) {
+                    Yii::$app->session->setFlash('success', 'Thank you for contacting us.');
+                } else {
+                    Yii::$app->session->setFlash('error', 'There was an error sending your message.');
+                }
+
+                return $this->refresh();
             } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
+                //echo "asd";
+                // $model = new FormForm();
+                // var_dump($model->getForms());
+                return $this->render('form', [
+                    'model' => $model,
+                    'images' => $images
+                ]);
             }
-
-            return $this->refresh();
-        } else {
-            //echo "asd";
-            // $model = new FormForm();
-            // var_dump($model->getForms());
-            return $this->render('form', [
-                'model' => $model,
-                'images' => $images
-            ]);
+        }else{
+            return $this->redirect(['/site/login']);
         }
+        
     }
 
     // public function actionUpload()

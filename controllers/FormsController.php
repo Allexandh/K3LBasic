@@ -37,13 +37,22 @@ class FormsController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new FormsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->user->can('view-form')){
+            $searchModel = new FormsSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            if(Yii::$app->user->identity->status=="Supervisor"){
+                $dataProvider->query->where('supervisor = \''.Yii::$app->user->identity->email.'\'');
+            }
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            return $this->redirect(['/site/index']);
+        }
+
+        
     }
 
     /**
@@ -54,13 +63,18 @@ class FormsController extends Controller
      */
     public function actionView($id)
     {
-        //$user = User::findAllUser2();
-        $model = $this->findModel($id);
-        $notes = new Notes;
-        //$user = User::findStatus($model->supervisor);
-        return $this->render('view', [
-            'model' => $model,'notes' => $notes,
-        ]);
+
+        if(Yii::$app->user->can('view-form')){
+            //$user = User::findAllUser2();
+            $model = $this->findModel($id);
+            $notes = new Notes;
+            //$user = User::findStatus($model->supervisor);
+            return $this->render('view', [
+                'model' => $model,'notes' => $notes,
+            ]);
+        }else{
+            return $this->redirect(['/site/index']);
+        }
     }
 
     /**
@@ -90,35 +104,48 @@ class FormsController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-        $user = User::findAllUser();
-        $notes = Notes::find()->where(['formid'=>$id])->indexBy('id')->all();
+        if(Yii::$app->user->can('update-alldataform')){
+            $model = $this->findModel($id);
+            $user = User::findAllUser();
+            $notes = Notes::find()->where(['formid'=>$id])->indexBy('id')->all();
 
-        if (Model::loadMultiple($notes, Yii::$app->request->post()) && Model::validateMultiple($notes) && $model->load(Yii::$app->request->post())) {
-            if($model->supervisor != 'None' && $model->supervisor != NULL){
-                date_default_timezone_set('Asia/Jakarta');
-                $time = new \DateTime();
-                $time->modify("+5 day");
-                $model->casedue = $time->format("Y-m-d_H-i-s");
-                if($model->status == 'Pemeriksaan'){
-                    $model->status = 'Proses';
+            if (Model::loadMultiple($notes, Yii::$app->request->post()) && Model::validateMultiple($notes) && $model->load(Yii::$app->request->post())) {
+                if($model->supervisor != 'None' && $model->supervisor != NULL){
+                    date_default_timezone_set('Asia/Jakarta');
+                    $time = new \DateTime();
+                    $time->modify("+5 day");
+                    $model->casedue = $time->format("Y-m-d_H-i-s");
+                    if($model->status == 'Pemeriksaan'){
+                        $model->status = 'Proses';
+                    }
+                }else{
+                    $model->supervisor = 'None';
                 }
-            }else{
-                $model->supervisor = 'None';
+
+                foreach ($notes as $note) {
+                    $note->save(false);
+                }
+
+                if($model->save()){
+                    return $this->redirect(['view', 'id' => $model->caseid]);
+                }
             }
 
-            foreach ($notes as $note) {
-                $note->save(false);
-            }
-
-            if($model->save()){
-                return $this->redirect(['view', 'id' => $model->caseid]);
-            }
+            return $this->render('update', [
+                'model' => $model,'user' => $user,'notes'=>$notes,
+            ]);
+        }else if(Yii::$app->user->can('update-statusform')){
+            //return $this->redirect(['/site/index']);
+            $model = $this->findModel($id);
+            $user = User::findAllUser();
+            $notes = Notes::find()->where(['formid'=>$id])->indexBy('id')->all();
+            return $this->render('update', [
+                'model' => $model,'user' => $user,'notes'=>$notes,
+            ]);
+        }else{
+            return $this->redirect(['/site/index']);
         }
 
-        return $this->render('update', [
-            'model' => $model,'user' => $user,'notes'=>$notes,
-        ]);
     }
 
     /**
@@ -130,9 +157,13 @@ class FormsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        if(Yii::$app->user->can('delete-form')){
+            $this->findModel($id)->delete();
+            return $this->redirect(['index']);
+        }else{
+            return $this->redirect(['/site/index']);
+        }
     }
 
     /**
