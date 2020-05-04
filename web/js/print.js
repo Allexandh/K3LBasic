@@ -1,12 +1,12 @@
 $( document ).ready(function() {
 	$("table").css("width", "100%");
 	var id = "dawd";
-	var email= "test";
+	var email= "";
 	var item = new Object();
-	item.namaKorban = $("table").find("tr:eq(2)").find("td:eq(0)")[0].textContent;
+	item.namaKorban = $("table").find("tr:eq(0)").find("td:eq(0)")[0].textContent;
 	item.jenisPekerjaan = "";
-	item.lokasi = $("table").find("tr:eq(3)").find("td:eq(0)")[0].textContent;
-	item.tanggal = $("table").find("tr:eq(4)").find("td:eq(0)")[0].textContent;
+	item.lokasi = $("table").find("tr:eq(2)").find("td:eq(0)")[0].textContent;
+	item.tanggal = $("table").find("tr:eq(3)").find("td:eq(0)")[0].textContent;
 	item.apd = email;
 	item.kesesuaian = email;
 	item.judulSOP = email;
@@ -19,15 +19,20 @@ $( document ).ready(function() {
 	item.bahan = email;
 	item.statusperalatan = email;
 	item.kesesuaianalat = email;
-	item.penjelasan = $("table").find("tr:eq(5)").find("td:eq(0)")[0].textContent;
+	item.penjelasan = $("table").find("tr:eq(4)").find("td:eq(0)")[0].textContent;
 	item.analisa = email;
 	item.koreksi = email;
 	item.tindakankorektif = email;
 	item.nilaikerugian = email;
 	item.evaluasi = email;
 	item.insidenditutup = email;
-	item.lampiran = email;
+	item.lampiran = $("table").find("tr:eq(5)").find("td:eq(0)").find("img").attr("src").substr(1);
+	item.lampiranprop = {"width" : $("table").find("tr:eq(5)").find("td:eq(0)").find("img").prop("naturalWidth"), "height" : $("table").find("tr:eq(5)").find("td:eq(0)").find("img").prop("naturalHeight")}
 	console.log(item);
+	var ccc = $("table").find("tr:eq(5)").find("td:eq(0)").find("img").prop("naturalWidth") / 2;
+	var ddd = $("table").find("tr:eq(5)").find("td:eq(0)").find("img").prop("naturalHeight") / 2;
+	console.log(ccc);
+	console.log(ddd);
 	var myString = JSON.stringify(item);
 	var data = (btoa(myString));
 	$("#tableencoded").val(data);
