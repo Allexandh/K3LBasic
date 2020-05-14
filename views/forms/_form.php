@@ -68,6 +68,8 @@ use yii\helpers\ArrayHelper;
         }
     ?>
 
+    <?= $form->field($images, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
+
 
 
 

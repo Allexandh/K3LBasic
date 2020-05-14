@@ -51,7 +51,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Forms', ['create'], ['class' => 'btn btn-success']) ?>
+        <!-- <?= Html::a('Create Forms', ['create'], ['class' => 'btn btn-success']) ?> -->
+        <?= Html::a('New', ['status', 'status' => 'Pemeriksaan'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Ongoing', ['status', 'status' => 'Proses'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Finished', ['status', 'status' => 'Selesai'], ['class' => 'btn btn-success']) ?>
     </p>
     <br>
 
@@ -90,12 +93,19 @@ $this->params['breadcrumbs'][] = $this->title;
             //'gambar',
             //'casedue',
             //'email:email',
+            [
+                'label' => 'Status',
+                'attribute' => 'status',
+                'value' => function($data){
+                    //return substr($data->tanggalwaktu, 0, -7);
+                    return $data->status;
+                },
+            ],  
             'status',
             'supervisor',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-
 
 </div>

@@ -11,6 +11,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\base\Model;
+use app\models\UploadForm;
+use yii\web\UploadedFile;
+use yii\helpers\Url;
 /**
  * FormsController implements the CRUD actions for Forms model.
  */
@@ -31,6 +34,29 @@ class FormsController extends Controller
         ];
     }
 
+    public function actionStatus(){
+        $request = Yii::$app->request;
+        $statusForm = $id = $request->get('status');
+        //echo $relativeHomeUrl;
+        if(Yii::$app->user->can('view-form')){
+            $searchModel = new FormsSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            if(Yii::$app->user->identity->status=="Supervisor"){
+                //$dataProvider->query->where('supervisor = \''.Yii::$app->user->identity->email.'\'');
+                $dataProvider->query
+                ->andFilterWhere(['like', 'supervisor',Yii::$app->user->identity->email])
+                ->andFilterWhere(['like', 'status',$statusForm]);
+            }
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            return $this->redirect(['/site/index']);
+        } 
+    }
+
     /**
      * Lists all Forms models.
      * @return mixed
@@ -41,7 +67,8 @@ class FormsController extends Controller
             $searchModel = new FormsSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             if(Yii::$app->user->identity->status=="Supervisor"){
-                $dataProvider->query->where('supervisor = \''.Yii::$app->user->identity->email.'\'');
+                //$dataProvider->query->where('supervisor = \''.Yii::$app->user->identity->email.'\'');
+                $dataProvider->query->andFilterWhere(['like', 'supervisor',Yii::$app->user->identity->email]);
             }
 
             return $this->render('index', [
@@ -50,9 +77,7 @@ class FormsController extends Controller
             ]);
         }else{
             return $this->redirect(['/site/index']);
-        }
-
-        
+        }    
     }
 
     /**
@@ -108,6 +133,7 @@ class FormsController extends Controller
             $model = $this->findModel($id);
             $user = User::findAllUser();
             $notes = Notes::find()->where(['formid'=>$id])->indexBy('id')->all();
+            $images = new \app\models\UploadForm();
 
             if (Model::loadMultiple($notes, Yii::$app->request->post()) && Model::validateMultiple($notes) && $model->load(Yii::$app->request->post())) {
                 if($model->supervisor != 'None' && $model->supervisor != NULL){
@@ -126,13 +152,22 @@ class FormsController extends Controller
                     $note->save(false);
                 }
 
+                $images->imageFiles = UploadedFile::getInstances($images, 'imageFiles');
+                date_default_timezone_set('Asia/Jakarta');
+                $time = new \DateTime();
+                $times = $time->format("Y-m-d_H-i-s");
+                //$id = $model->caseid;
+                $images->uploadSupervisorImage($id,$times);
+                //$id = $model->saveData($times, $casedue);//buat save data formnya
+                
+
                 if($model->save()){
                     return $this->redirect(['view', 'id' => $model->caseid]);
                 }
             }
 
             return $this->render('update', [
-                'model' => $model,'user' => $user,'notes'=>$notes,
+                'model' => $model,'user' => $user,'notes'=>$notes,'images'=>$images
             ]);
         }else{
             return $this->redirect(['/site/index']);

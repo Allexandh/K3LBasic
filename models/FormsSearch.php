@@ -58,7 +58,7 @@ class FormsSearch extends Forms
         // grid filtering conditions
         $query->andFilterWhere([
             'caseid' => $this->caseid,
-            'tanggalwaktu' => $this->tanggalwaktu,
+            //'tanggalwaktu' => $this->tanggalwaktu,
             'casedue' => $this->casedue,
         ]);
 
@@ -66,8 +66,10 @@ class FormsSearch extends Forms
             ->andFilterWhere(['like', 'location', $this->location])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'tanggalwaktu', $this->tanggalwaktu])
             ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'supervisor', $this->supervisor]);
+            ->andFilterWhere(['like', 'supervisor', $this->supervisor])
+            ;
 
         return $dataProvider;
     }

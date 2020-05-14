@@ -19,14 +19,13 @@ class UploadForm extends Model
     public function rules()
     {
         return [
-            [['imageFiles','caseId'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 4],
+            [['imageFiles','caseId'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 3],
+            //[['imageFiles','caseId'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 3],
         ];
     }
     
     public function upload($id,$time)
     {
-        //if ($this->validate()) { 
-        //$ups = Yii::getAlias('@/uploads');
         $index = 1;
 
             foreach ($this->imageFiles as $file) {
@@ -41,11 +40,28 @@ class UploadForm extends Model
 
                 $index++;
             }
-            //return true;
-        //} else {
-        //    return false;
-        //}
     }
+
+
+    public function uploadSupervisorImage($id,$time)
+    {
+        $index = 1;
+
+            foreach ($this->imageFiles as $file) {
+                $images = new Images();
+                $name = $id."s_".$time."_".$index;
+                //upload gambar
+                $file->saveAs('uploads/' .$name. '.' . $file->extension);
+                //save data
+                $images->imageFiles = $name. '.' . $file->extension;
+                $images->caseId = $id."s";
+                $images->save();
+
+                $index++;
+            }
+    }
+
+
 
     // public function saveData($id,$time){
 

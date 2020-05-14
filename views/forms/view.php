@@ -80,11 +80,34 @@ $this->registerJsFile(
                 'format' => 'html',
                 'value' => function($data){
                     $imageLink = "";
-                    $images = Images::find()->where(['caseId' => (string) $data->caseid])->asArray()->limit(1)->all();
+                    $images = Images::find()->where(['caseId' => (string) $data->caseid])->asArray()->limit(3)->all();
+                    $imgarr=null;
                     foreach ($images as $img){
-                        return  "<img src=".Yii::$app->request->baseUrl.'/uploads/'.$img['imageFiles']."
+                        $imgarr = $imgarr."<img src=".Yii::$app->request->baseUrl.'/uploads/'.$img['imageFiles']."
                         width='300px' height='auto'>";
+                        
                     }
+                    return  $imgarr;
+                },
+                'header' => 'Gambar',
+            ],
+            [
+                'attribute' => 'Gambar Supervisor',
+                'label' => 'Gambar Dari Supervisor',
+                'format' => 'html',
+                'value' => function($data){
+                    //$imageLink = "";
+                    $imagesSupervisor = Images::find()->where(['caseId' => (string) $data->caseid."s"])->asArray()->limit(3)->all();
+                    if($imagesSupervisor==null){
+                        return "On Progress";
+                    }
+                    $imgarr=null;
+                    foreach ($imagesSupervisor as $imgSupervisor){
+                        $imgarr = $imgarr."<img src=".Yii::$app->request->baseUrl.'/uploads/'.$imgSupervisor['imageFiles']."
+                        width='300px' height='auto'>";
+                        
+                    }
+                    return  $imgarr;
                 },
                 'header' => 'Gambar',
             ],
