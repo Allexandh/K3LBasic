@@ -2,6 +2,18 @@ $( document ).ready(function() {
 	$("table").css("width", "100%");
 	var id = "dawd";
 	var email= "";
+	var lampiran = [];
+	var lampiransuper = [];
+	$("table").find("tr:eq(5)").find("td:eq(0)").find("img").each(function (data){
+		//console.log($(this).attr("src"));
+		lampiran.push($(this).attr("src").substring(1));
+	});
+	$("table").find("tr:eq(6)").find("td:eq(0)").find("img").each(function (data){
+		//console.log($(this).attr("src"));
+		lampiransuper.push($(this).attr("src").substring(1));
+	});
+	console.log("Lampiran super");
+	console.log(lampiransuper);
 	var item = new Object();
 	item.namaKorban = $("table").find("tr:eq(0)").find("td:eq(0)")[0].textContent;
 	item.jenisPekerjaan = "";
@@ -26,8 +38,9 @@ $( document ).ready(function() {
 	item.nilaikerugian = email;
 	item.evaluasi = email;
 	item.insidenditutup = email;
-	item.lampiran = $("table").find("tr:eq(5)").find("td:eq(0)").find("img").attr("src").substr(1);
+	item.lampiran = lampiran;
 	item.lampiranprop = {"width" : $("table").find("tr:eq(5)").find("td:eq(0)").find("img").prop("naturalWidth"), "height" : $("table").find("tr:eq(5)").find("td:eq(0)").find("img").prop("naturalHeight")}
+	item.lampiransuper = lampiransuper;
 	console.log(item);
 	var ccc = $("table").find("tr:eq(5)").find("td:eq(0)").find("img").prop("naturalWidth") / 2;
 	var ddd = $("table").find("tr:eq(5)").find("td:eq(0)").find("img").prop("naturalHeight") / 2;
