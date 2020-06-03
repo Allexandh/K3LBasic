@@ -46,6 +46,10 @@ class FormsController extends Controller
                 $dataProvider->query
                 ->andFilterWhere(['like', 'supervisor',Yii::$app->user->identity->email])
                 ->andFilterWhere(['like', 'status',$statusForm]);
+            }elseif(Yii::$app->user->identity->status=="Admin"){
+                $dataProvider->query
+                //->andFilterWhere(['like', 'Admin',Yii::$app->user->identity->status])
+                ->andFilterWhere(['like', 'status',$statusForm]);
             }
 
             return $this->render('index', [
