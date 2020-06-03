@@ -28,6 +28,8 @@ $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('template/template
 $templateProcessor->setValue('name', $data->namaKorban);
 $templateProcessor->setValue('location', $data->lokasi);
 $templateProcessor->setValue('date', $data->tanggal);
+$templateProcessor->setValue('datenow', date("Y-m-d"));
+
 $templateProcessor->setValue('description', $data->penjelasan);
 $templateProcessor->cloneBlock('lampiran',$lampiran , true, true);
 $i = 1;
