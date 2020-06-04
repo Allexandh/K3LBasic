@@ -2,10 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+echo "<div class='container'>";
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
-
+$this->registerCssFile("@web/css/test.css", [
+    'depends' => [\yii\bootstrap\BootstrapAsset::className()]
+]);
 //$this->title = $model->email;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -16,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'email' => $model->email], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Update', ['update', 'email' => $model->email], ['class' => 'btn btn-info']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -36,4 +38,5 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+</div>
 </div>

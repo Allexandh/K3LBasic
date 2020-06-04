@@ -1,6 +1,11 @@
 <?php
 
 use yii\helpers\Html;
+echo "<div class='container'>";
+
+$this->registerCssFile("@web/css/test.css", [
+    'depends' => [\yii\bootstrap\BootstrapAsset::className()]
+]);
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
@@ -18,4 +23,5 @@ $this->params['breadcrumbs'][] = 'Update';
         'model' => $model,
     ]) ?>
 
+</div>
 </div>

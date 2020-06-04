@@ -8,6 +8,11 @@ use app\models\Images;
 use app\models\Notes;
 /* @var $this yii\web\View */
 /* @var $model app\models\Forms */
+echo "<div class='container'>";
+
+$this->registerCssFile("@web/css/test.css", [
+    'depends' => [\yii\bootstrap\BootstrapAsset::className()]
+]);
 
 $this->title = $model->email;
 $this->params['breadcrumbs'][] = ['label' => 'Forms', 'url' => ['index']];
@@ -28,7 +33,7 @@ $this->registerJsFile(
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->caseid], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Update', ['update', 'id' => $model->caseid], ['class' => 'btn btn-info']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->caseid], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -44,7 +49,7 @@ $this->registerJsFile(
     <?php $form->action = "index.php?r=forms%2Fprint" ?>
     <input type="hidden" id="tableencoded" name="tableencoded" />
     <div class="form-group">
-        <?= Html::submitButton('Print Forms', ['class' => 'btn btn-danger']) ?>
+        <?= Html::submitButton('Print Forms', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
@@ -146,4 +151,5 @@ $this->registerJsFile(
 
 
     </div>
+</div>
 </div>

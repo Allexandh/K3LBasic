@@ -5,6 +5,13 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Forms */
 
+echo "<div class='container'>";
+
+$this->registerCssFile("@web/css/test.css", [
+    'depends' => [\yii\bootstrap\BootstrapAsset::className()]
+]);
+
+
 $this->title = 'Update Forms: ' . $model->email;
 $this->params['breadcrumbs'][] = ['label' => 'Forms', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->email, 'url' => ['view', 'id' => $model->id]];
@@ -18,4 +25,5 @@ $this->params['breadcrumbs'][] = 'Update';
         'model' => $model,'user' => $user,'notes'=>$notes,'images'=>$images
     ]) ?>
 
+</div>
 </div>

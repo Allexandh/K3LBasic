@@ -7,6 +7,10 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\RoleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+$this->registerCssFile("@web/css/test.css", [
+    'depends' => [\yii\bootstrap\BootstrapAsset::className()]
+]);
+
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -42,10 +46,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
-    <link href="css/theme.css" rel="stylesheet" media="all">
+    <!-- <link href="css/theme.css" rel="stylesheet" media="all"> -->
 
 </head>
 <div class="user-index">
+     <div class="container">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -136,4 +141,5 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
 
+</div>
 </div>

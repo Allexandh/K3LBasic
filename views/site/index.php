@@ -5,7 +5,11 @@ use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use app\models\Forms;
 use app\models\Images;
-// testestestswetestsetse
+use app\models\User;
+
+$this->registerCssFile("@web/css/test.css", [
+    'depends' => [\yii\bootstrap\BootstrapAsset::className()]
+]);
 
 $dataProvider = new ActiveDataProvider([
         'query' => Forms::find(),
@@ -21,8 +25,51 @@ $dataProvider = new ActiveDataProvider([
 
 ]);
 
+
+$datauser = new ActiveDataProvider([
+		'query' => User::find()
+]);
+
 $this->title = 'My Yii Application';
 ?>
+
+	<div>
+		<div class="row">
+			<div>
+	        	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+					<ol class="carousel-indicators">
+					    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					    <li data-target="#myCarousel" data-slide-to="1"></li>
+				    </ol>
+
+				  	<div class="carousel-inner">
+				    	<div class="item active">
+			      			<img src="images/kacablurfixfix.png" alt="Los Angeles">
+			    		</div>
+				    	<div class="item">
+				      		<img src="images/orangblurfixfix.png" alt="Los Angeles">
+				    	</div>
+			  		</div>
+
+			  		<div class="main-text hidden-xs">
+	                	<div class="col-md-12 text-center">
+	                		<br><br><br><br>
+	                	
+	                		<img src="images/logopng.png" width="50%" height="50%">
+	                    <!-- <h1>
+	                        BeSave</h1> -->
+		                    <div class="hometext">
+		                        Web aplikasi K3L untuk UMN
+		                    </div>
+	                    	<p><a class="btn btn-lg btn-success" href="/index.php?r=site%2Fform">ISI FORM</a></p>
+	                	</div>
+	            	</div>
+				</div>
+	        </div>
+	    </div>
+	</div>
+	<div id="push">
+	</div>
 
 
         <!-- PAGE CONTENT-->
@@ -30,30 +77,34 @@ $this->title = 'My Yii Application';
             
 		<div class="page-content--bge5">
 
-				<div class="jumbotron">
+				<!-- <div class="jumbotron"> -->
 					<!-- <h1>K3L</h1> -->
-					<img src="images/besafe.jpg" width="50%" height="50%">
-					
+					<!-- <img src="images/besafe.jpg" width="50%" height="50%">
+					 -->
 					<!-- <p class="lead">You have successfully created your Yii-powered application....</p> -->
-
+<!-- 
 					<p><a class="btn btn-lg btn-success" href="index.php?r=site%2Fform">ISI FORM</a></p>
 				</div>
-
+ -->
 				<div class="body-content">
 
 					<section class="statistic statistic2">
 							<div class="container">
 								<div class="row">
 									<div class="col-md-6 col-lg-3">
+									</div>
+									<div class="col-md-6 col-lg-3">
 										<div class="statistic__item statistic__item--orange">
-											<h2 class="number">10,368</h2>
+											<h2 class="number"><?php
+											echo $datauser->getTotalCount();
+										?></h2>
 											<span class="desc">total user</span>
 											<div class="icon">
 												<i class="zmdi zmdi-account-o"></i>
 											</div>
 										</div>
 									</div>
-									<div class="col-md-6 col-lg-3">
+									<!-- <div class="col-md-6 col-lg-3">
 										<div class="statistic__item statistic__item--green">
 											<h2 class="number">388,688</h2>
 											<span class="desc">completed</span>
@@ -70,10 +121,12 @@ $this->title = 'My Yii Application';
 												<i class="zmdi zmdi-calendar-note"></i>
 											</div>
 										</div>
-									</div>
+									</div> -->
 									<div class="col-md-6 col-lg-3">
 										<div class="statistic__item statistic__item--blue">
-											<h2 class="number">1060386</h2>
+											<h2 class="number"><?php
+											echo $dataProvider->getTotalCount();
+										?></h2>
 											<span class="desc">total report</span>
 											<div class="icon">
 												<i class="zmdi zmdi-collection-text"></i>
@@ -84,6 +137,8 @@ $this->title = 'My Yii Application';
 							</div>
 						</section>
 					
+
+					<div class="container">
 					<?php
 
 					echo GridView::widget([
@@ -138,7 +193,7 @@ $this->title = 'My Yii Application';
 				</div>
 
 			</div>
-
+		</div>
 
 
     </div>

@@ -8,6 +8,10 @@ use app\models\Forms;
 /* @var $searchModel app\models\FormsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+$this->registerCssFile("@web/css/test.css", [
+    'depends' => [\yii\bootstrap\BootstrapAsset::className()]
+]);
+
 $this->title = 'Forms';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -42,19 +46,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
-    <link href="css/theme.css" rel="stylesheet" media="all">
+    <!-- <link href="css/theme.css" rel="stylesheet" media="all"> -->
 
 </head>
 
 <div class="forms-index">
 
+    <div class="container">
+
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <!-- <?= Html::a('Create Forms', ['create'], ['class' => 'btn btn-success']) ?> -->
-        <?= Html::a('New', ['status', 'status' => 'Pemeriksaan'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Ongoing', ['status', 'status' => 'Proses'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Finished', ['status', 'status' => 'Selesai'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('New', ['status', 'status' => 'Pemeriksaan'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Ongoing', ['status', 'status' => 'Proses'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Finished', ['status', 'status' => 'Selesai'], ['class' => 'btn btn-info']) ?>
     </p>
     <br>
 
@@ -101,11 +107,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->status;
                 },
             ],  
-            'status',
+            // 'status',
             'supervisor',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 
+</div>
 </div>

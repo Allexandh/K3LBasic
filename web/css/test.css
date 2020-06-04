@@ -1,0 +1,73 @@
+body
+{
+	/*background-color: #F5F5F5;*/
+    /*font-family: -apple-system, BlinkMacSystemFont, sans-serif;*/
+    font-family: -apple-system, system-ui, BlinkMacSystemFont;
+    font-size: 17px;
+    
+    /*font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    
+    line-height: 1.625;
+    color: #666;
+    color: #666;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
+
+
+}
+	/*.body-content
+{
+	background-color: #F5F5F5; 
+}
+*/
+.main-text {
+    color: #fff;
+    position: absolute;
+
+    top: 50px;
+    width: 96.6667%;
+}
+.hometext
+{
+	font-size: 50px;
+	color: black;
+    font-weight: bold;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #FFFFFF;
+	
+}
+.btn-min-block
+{
+    min-width: 170px;
+    line-height: 26px;
+}
+.btn-clear
+{
+    color: #FFF;
+    background-color: transparent;
+    border-color: #FFF;
+    margin-right: 15px;
+}
+.btn-clear:hover
+{
+    color: #000;
+    background-color: #FFF;
+}
+
+
+
+.containerform {
+    padding: 70px 15px 20px;
+    margin-right: auto;
+    margin-left: auto;
+      box-sizing: border-box;
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+}
+
+
+.buttonfilter {
+    
+}

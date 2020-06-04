@@ -9,15 +9,22 @@ use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 
 //$this->title = 'Contact';
+
+$this->registerCssFile("@web/css/test.css", [
+    'depends' => [\yii\bootstrap\BootstrapAsset::className()]
+]);
+
+echo "<div class='container'>";
+
 $this->title = 'Isi Form';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-form">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
+<!--     <p>
         If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
-    </p>
+    </p> -->
 
     <div class="row">
         <div class="col-lg-5">
@@ -57,7 +64,7 @@ $this->title = 'Isi Form';
     <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
-    <link href="css/theme.css" rel="stylesheet" media="all">
+    <!-- <link href="css/theme.css" rel="stylesheet" media="all"> -->
 
 </head>
 <body>
@@ -105,13 +112,14 @@ $this->title = 'Isi Form';
             </div>
             <div class="card-footer">
                 <div class="form-group">
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                    <?= Html::submitButton('Submit', ['class' => 'btn btn-success', 'name' => 'contact-button']) ?>
                 </div>
             </div>
             
             <?php ActiveForm::end(); ?>
         </div>
     </div>
+</div>
 </body>
 
 
