@@ -35,6 +35,7 @@ class FormsController extends Controller
     }
 
     public function actionStatus(){
+        $test;
         $request = Yii::$app->request;
         $statusForm = $id = $request->get('status');
         //echo $relativeHomeUrl;
