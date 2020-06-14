@@ -61,7 +61,7 @@ $this->title = 'My Yii Application';
 		                    <div class="hometext">
 		                        Web aplikasi K3L untuk UMN
 		                    </div>
-	                    	<p><a class="btn btn-lg btn-success" href="/index.php?r=site%2Fform">ISI FORM</a></p>
+	                    	<p><a class="btn btn-lg btn-success" href="index.php?r=site%2Fform">ISI FORM</a></p>
 	                	</div>
 	            	</div>
 				</div>
