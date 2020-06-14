@@ -17,6 +17,7 @@ use Yii;
  * @property string $email
  * @property string $status
  */
+//model/class dari forms
 class Forms extends \yii\db\ActiveRecord
 {
     /**
@@ -61,7 +62,7 @@ class Forms extends \yii\db\ActiveRecord
         ];
     }
 
-
+    //ini untuk menyimpan data form
     public function saveData($time, $casedue){
         $forms = new Forms();
         $forms->phonenum = $this->phonenum;
@@ -69,14 +70,10 @@ class Forms extends \yii\db\ActiveRecord
         $forms->description = $this->description;
         $forms->email = Yii::$app->user->identity->email;
         $forms->tanggalwaktu = $time;
-        //$forms->casedue = $casedue;
         $forms->casedue = 0;
         $forms->status = "Pemeriksaan";
         $forms->supervisor = "None";
         $forms->save();
-        // if($forms->save(false)){
-        //     echo "test 2";
-        // }
         return $forms->getId();
     }
 
@@ -87,21 +84,16 @@ class Forms extends \yii\db\ActiveRecord
 
     public function check(){
         return Yii::$app->user->identity->username;
-        //return true;
     }
 
     public function getId()
     {   
         return $this->getPrimaryKey();
-        //return $this->getPrimaryKey();
     }
 
     public function getImages()
     {
         return $this->hasOne(Images::className(), ['caseId'=> 'caseid']);
     }
-    // public function getNotes(){
-    //     return $this->hasOne(Notes::className(),['formid'=>'caseid']);
-    // }
 
 }

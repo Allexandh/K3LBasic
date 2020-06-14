@@ -22,6 +22,12 @@ use Yii;
  * @property AuthItem[] $children
  * @property AuthItem[] $parents
  */
+
+//membuat privilege dan role yang akan diberikan ke user
+//name = nama role atau privilege
+//type = 1 untuk role -> admin/supervisor/guests/etc
+//       2 untuk privilege -> create-form/update-role/etc
+//description = deskripsi dari role dan privilege
 class AuthItem extends \yii\db\ActiveRecord
 {
     /**

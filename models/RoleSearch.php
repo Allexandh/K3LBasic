@@ -9,6 +9,9 @@ use app\models\User;
 /**
  * RoleSearch represents the model behind the search form of `app\models\User`.
  */
+
+//class atau model dari user
+//untuk search di admin roles
 class RoleSearch extends User
 {
     public static function tableName()
@@ -47,28 +50,14 @@ class RoleSearch extends User
     public function search($params)
     {
         $query = User::find();
-
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
         $this->load($params);
-
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
-
-        // grid filtering conditions
-        // $query->andFilterWhere([
-        //     'id' => $this->id,
-        //     'status' => $this->status,
-        //     'created_at' => $this->created_at,
-        //     'updated_at' => $this->updated_at,
-        // ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'auth_key', $this->auth_key])

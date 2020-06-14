@@ -48,18 +48,19 @@ class Notes extends \yii\db\ActiveRecord
         ];
     }
 
+    //mencari notes dari suatu form
     public function noteSearch($id,$role){
         return Notes::find()->select('notes')->where(['formid'=>$id,'source'=>$role])->one();
     }
 
-    public function findNotes($id,$role){
-        //return Notes::find()->select('notes')->where(['formid'=>$id])->one();
-        return Notes::find()->where(['formid'=>$id,'source'=>$role])->indexBy('id')->one();
-    }
+    // public function findNotes($id,$role){
+    //     //return Notes::find()->select('notes')->where(['formid'=>$id])->one();
+    //     return Notes::find()->where(['formid'=>$id,'source'=>$role])->indexBy('id')->one();
+    // }
 
+    //membuat notes
     public function createNotes($id,$source){
         $notes = new Notes();
-        //$notes->id=0;
         $notes->formid=strval($id);
         $notes->notes="";
         //source itu asalnya, 1 = dari admin, 2 dari supervisor

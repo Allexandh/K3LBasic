@@ -13,6 +13,11 @@ use Yii;
  *
  * @property AuthItem $itemName
  */
+
+
+//berisi informasi role dari user
+//item_name = role dari user
+//user_id = id dari user
 class AuthAssignment extends \yii\db\ActiveRecord
 {
     /**

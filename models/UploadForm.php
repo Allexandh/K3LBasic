@@ -7,7 +7,7 @@ use yii\base\Model;
 use yii\web\UploadedFile;
 use app\models\Images;
 
-
+//untuk upload gambar di form
 class UploadForm extends Model
 {
     /**
@@ -24,10 +24,11 @@ class UploadForm extends Model
         ];
     }
     
+    //upload gambar dari pembuat form ke admin/supervisor
     public function upload($id,$time)
     {
+        //index untuk count jumlah image
         $index = 1;
-
             foreach ($this->imageFiles as $file) {
                 $images = new Images();
                 $name = $id."_".$time."_".$index;
@@ -37,12 +38,11 @@ class UploadForm extends Model
                 $images->imageFiles = $name. '.' . $file->extension;
                 $images->caseId = $id;
                 $images->save();
-
                 $index++;
             }
     }
 
-
+    //upload gambar versi supervisor ke admin
     public function uploadSupervisorImage($id,$time)
     {
         $index = 1;
@@ -61,25 +61,6 @@ class UploadForm extends Model
             }
     }
 
-
-
-    // public function saveData($id,$time){
-
-    //     $index = 1;
-    //     //date_default_timezone_set('Asia/Jakarta');
-
-    //     $name = $id."_".$time."_".$index;
-    //     foreach ($this->imageFiles as $file) {
-    //         $images = new Images();
-    //         //$images->imageFiles =
-    //         $images->imageFiles = $name. '.' . $file->extension;
-    //         $images->caseId = $id;
-    //         $index++;
-    //         var_dump($images->caseId);  
-    //         $images->save();
-    //     }
-    //     return;
-    // }
 }
 
 

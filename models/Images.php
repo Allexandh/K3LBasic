@@ -12,6 +12,8 @@ use yii\db\ActiveRecord;
  * @property string $caseId
  * @property string $imageFiles
  */
+
+//model atau class dari images
 class Images extends \yii\db\ActiveRecord
 {
     /**

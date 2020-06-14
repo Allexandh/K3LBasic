@@ -30,17 +30,13 @@ class RoleController extends Controller
         ];
     }
 
-    /**
-     * Lists all User models.
-     * @return mixed
-     */
+
+    //display daftar user
     public function actionIndex()
     {
         if(Yii::$app->user->can('view-role')){
             $searchModel = new RoleSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-            //var_dump($dataProvider);
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
@@ -50,12 +46,7 @@ class RoleController extends Controller
         }
     }
 
-    /**
-     * Displays a single User model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    //melihat detail dari user sesuai dengan emailnya
     public function actionView($email)
     {
         if(Yii::$app->user->can('view-role')){
@@ -68,80 +59,46 @@ class RoleController extends Controller
         
     }
 
+    //mencari user menggunakan email
     protected function findModelEmail($email)
     {
-        //echo $email."  ";
         if (($model = User::findOne(['email'=>$email])) !== null) {
             return $model;
         }
-        // $model = User::find()->where(['email' => $email])->one();
-        // return $model;
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
 
-    protected function findModel($id)
-    {
-        //echo $email."  ";
-        if (($model = User::findOne($id)) !== null) {
-            return $model;
-        }
-        // $model = User::find()->where(['email' => $email])->one();
-        // return $model;
+    // protected function findModel($id)
+    // {
+    //     if (($model = User::findOne($id)) !== null) {
+    //         return $model;
+    //     }
+    //     throw new NotFoundHttpException('The requested page does not exist.');
+    // }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    /**
-     * Creates a new User model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new User();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing User model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    //untuk mengupdate user
     public function actionUpdate($email)
     {
-
+        //hanya bisa dilakukan oleh admin
         if(Yii::$app->user->can('update-role')){
             $model = $this->findModelEmail($email);
-
             $emails = $model->email;
             $status = $model->status;
             $id = User::find()->select('id')->where(['email'=>$emails])->one();
-
             $oldStatus = AuthAssignment::find()->select(['item_name'])->where(['user_id'=>$id])->one();
 
+            //mengambil data yang diupdate
+            //mengubah role dari user
             if ($model->load(Yii::$app->request->post())) {
-
-                
                 $status = $model->status;
                 $manager = Yii::$app->authManager;
                 $item = $manager->getRole($oldStatus['item_name']);
                 $item = $item ? : $manager->getPermission('Admin');
                 $manager->revoke($item,$id['id']);
-
                 $authorRole = $manager->getRole($status);
                 $manager->assign($authorRole, $id['id']);
-
                 $model->save();
                 return $this->redirect(['view', 'email' => $model->email]);
             }
@@ -154,25 +111,5 @@ class RoleController extends Controller
         }
     }
 
-    /**
-     * Deletes an existing User model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        //$this->findModel($id)->delete();
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the User model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return User the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
 
 }

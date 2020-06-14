@@ -11,6 +11,10 @@ use yii\base\Model;
  * @property User|null $user This property is read-only.
  *
  */
+
+//model atau class dari login
+//validasi login
+//menggunakan sha1 sebagai password
 class LoginForm extends Model
 {
     public $username;

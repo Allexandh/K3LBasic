@@ -58,11 +58,8 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
+    //display index/home
+    //kalau belum login akan redirect ke login
     public function actionIndex()
     {
         if(Yii::$app->user->can('view-home')){
@@ -72,11 +69,7 @@ class SiteController extends Controller
         }
     }
 
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
+    //untuk login
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -94,46 +87,14 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
+    //untuk logout
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
-
+    //untuk membuat form baru
     public function actionForm()
     {
         if(Yii::$app->user->can('create-form')){
@@ -142,22 +103,17 @@ class SiteController extends Controller
             $notes = new Notes();
 
             if ($model->load(Yii::$app->request->post())) {
-                //var_dump(Yii::$app->request->post());
+                //untuk mengupload image, namanya sesuai dengan format waktu dibawah
                 $images->imageFiles = UploadedFile::getInstances($images, 'imageFiles');
-
                 date_default_timezone_set('Asia/Jakarta');
                 $time = new \DateTime();
                 $times = $time->format("Y-m-d_H-i-s");
                 $time->modify("+5 day");
                 $casedue = $time->format("Y-m-d_H-i-s");
-                //$time = date('Y-m-d_H-i-s');
-                // echo $time->format("Y-m-d_H-i-s");
                 $id = $model->saveData($times, $casedue);//buat save data formnya
                 $images->upload($id,$times);//buat upload gambar di folder
-                $notes->createNotes($id,'1');
-                $notes->createNotes($id,'2');
-                //$id = $model->getId();
-                //$images->saveData($id,$time);//buat save data gambar yang diupload
+                $notes->createNotes($id,'1');//untuk notes admin
+                $notes->createNotes($id,'2');//untuk notes supervisor
 
                 if ($model->check(Yii::$app->request->post())) {
                     Yii::$app->session->setFlash('success', 'Thank you for contacting us.');
@@ -167,9 +123,7 @@ class SiteController extends Controller
 
                 return $this->refresh();
             } else {
-                //echo "asd";
-                // $model = new FormForm();
-                // var_dump($model->getForms());
+                //kalau belom post form, akan ke halaman form dulu
                 return $this->render('form', [
                     'model' => $model,
                     'images' => $images
@@ -181,27 +135,5 @@ class SiteController extends Controller
         
     }
 
-    // public function actionUpload()
-    // {
-    //     $images = new UploadForm();
-
-    //     if (Yii::$app->request->isPost) {
-    //         $images->imageFile = UploadedFile::getInstances($images, 'imageFile');
-    //         if ($images->upload()) {
-    //             echo "masukk";
-    //             // file is uploaded successfully
-    //             //return;
-    //         }else{
-    //             echo "kaga cuy";
-    //         }
-    //     }
-
-    //     //return $this->render('upload', ['images' => $images]);
-    // }
-
-    // public function actionFormAdmin(){
-
-    //     return $this->render('FormAdmin');
-    // }
 
 }

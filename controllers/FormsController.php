@@ -34,22 +34,26 @@ class FormsController extends Controller
         ];
     }
 
+    //action status sama action index dibedakan untuk filtering form sesuai dengan tombol yang dipencet (new,ongoing,finished)
+
+    //function buat filtering form di "list form" (new,ongoing,finished)
     public function actionStatus(){
-        $test;
+        //buat get statusnya (new/ongoing/finished)
         $request = Yii::$app->request;
         $statusForm = $id = $request->get('status');
-        //echo $relativeHomeUrl;
+        //cuman user tertentu yang bisa liat
         if(Yii::$app->user->can('view-form')){
+            //membuat model dan query untuk form
             $searchModel = new FormsSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            //cuman bisa melihat form yang diberikan oleh admin
             if(Yii::$app->user->identity->status=="Supervisor"){
-                //$dataProvider->query->where('supervisor = \''.Yii::$app->user->identity->email.'\'');
                 $dataProvider->query
                 ->andFilterWhere(['like', 'supervisor',Yii::$app->user->identity->email])
                 ->andFilterWhere(['like', 'status',$statusForm]);
+            //ini filter/query untuk admin
             }elseif(Yii::$app->user->identity->status=="Admin"){
                 $dataProvider->query
-                //->andFilterWhere(['like', 'Admin',Yii::$app->user->identity->status])
                 ->andFilterWhere(['like', 'status',$statusForm]);
             }
 
@@ -62,17 +66,14 @@ class FormsController extends Controller
         } 
     }
 
-    /**
-     * Lists all Forms models.
-     * @return mixed
-     */
+    //display semua form untuk admin, dan form tertentu untuk supervisor
+    //mirip dengan actionstatus diatas, cuman ini filter untuk supervisor saja, karena supervisor hanya bisa melihat form yang diberikan oleh admin
     public function actionIndex()
     {
         if(Yii::$app->user->can('view-form')){
             $searchModel = new FormsSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             if(Yii::$app->user->identity->status=="Supervisor"){
-                //$dataProvider->query->where('supervisor = \''.Yii::$app->user->identity->email.'\'');
                 $dataProvider->query->andFilterWhere(['like', 'supervisor',Yii::$app->user->identity->email]);
             }
 
@@ -85,15 +86,9 @@ class FormsController extends Controller
         }    
     }
 
-    /**
-     * Displays a single Forms model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    //untuk melihat detail dari form yang diklik    
     public function actionView($id)
     {
-
         if(Yii::$app->user->can('view-form')){
             //$user = User::findAllUser2();
             $model = $this->findModel($id);
@@ -107,31 +102,7 @@ class FormsController extends Controller
         }
     }
 
-    /**
-     * Creates a new Forms model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Forms();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->caseid]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Forms model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    //mengupdate form
     public function actionUpdate($id)
     {
         if(Yii::$app->user->can('update-statusform')){
@@ -140,7 +111,10 @@ class FormsController extends Controller
             $notes = Notes::find()->where(['formid'=>$id])->indexBy('id')->all();
             $images = new \app\models\UploadForm();
 
+            //ini untuk notes supervisor dan admin
             if (Model::loadMultiple($notes, Yii::$app->request->post()) && Model::validateMultiple($notes) && $model->load(Yii::$app->request->post())) {
+                //ini untuk cek apakah ada supervisor atau tidak, bila ada otomatis case duenya nambah 5 hari setelah form diberikan supervisor
+                //mengubah status juga
                 if($model->supervisor != 'None' && $model->supervisor != NULL){
                     date_default_timezone_set('Asia/Jakarta');
                     $time = new \DateTime();
@@ -157,15 +131,14 @@ class FormsController extends Controller
                     $note->save(false);
                 }
 
+                //ini untuk menyimpan gambar dari supervisor, dengan nama sesuai dengan waktu upload
                 $images->imageFiles = UploadedFile::getInstances($images, 'imageFiles');
                 date_default_timezone_set('Asia/Jakarta');
                 $time = new \DateTime();
                 $times = $time->format("Y-m-d_H-i-s");
-                //$id = $model->caseid;
                 $images->uploadSupervisorImage($id,$times);
-                //$id = $model->saveData($times, $casedue);//buat save data formnya
                 
-
+                //redirect ke detail form saat selesai update
                 if($model->save()){
                     return $this->redirect(['view', 'id' => $model->caseid]);
                 }
@@ -180,16 +153,9 @@ class FormsController extends Controller
 
     }
 
-    /**
-     * Deletes an existing Forms model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    //untuk menghapus form
     public function actionDelete($id)
     {
-
         if(Yii::$app->user->can('delete-form')){
             $this->findModel($id)->delete();
             return $this->redirect(['index']);
@@ -198,15 +164,7 @@ class FormsController extends Controller
         }
     }
 
-    /**
-     * Finds the Forms model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Forms the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-
-
+    //mencari form model berdasarkan id
     protected function findModel($id)
     {
         if (($model = Forms::findOne($id)) !== null) {
@@ -215,6 +173,8 @@ class FormsController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    //untuk print form
     public function actionPrint()
     {
         $request=Yii::$app->request->post('tableencoded');
