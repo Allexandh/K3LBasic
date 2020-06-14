@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'email')->textInput(['readonly'=> true,'maxlength' => true]) ?>
 
     <?= $form->field($model, 'username')->textInput(['readonly'=> true,'maxlength' => true]) ?>
-
+<!-- untuk mengubah status user -->
     <?= $form->field($model, 'status')->dropDownList(
             ['Admin' => 'Admin', 'Supervisor' => 'Supervisor','User' => 'User', 'Guests' => 'Guests']) ?>
 

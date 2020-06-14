@@ -17,14 +17,9 @@ $this->registerCssFile("@web/css/test.css", [
 echo "<div class='container'>";
 
 $this->title = 'Isi Form';
-//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-form">
     <h1><?= Html::encode($this->title) ?></h1>
-
-<!--     <p>
-        If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
-    </p> -->
 
     <div class="row">
         <div class="col-lg-5">

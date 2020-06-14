@@ -54,52 +54,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            //'id',
-            //'username',
-            // 'auth_key',
-            // 'password_hash',
-            // 'password_reset_token',
             'email',
             ['attribute' => 'status',
              'label' => 'status',
-            
-            // 'value' => function($data){
-            //     if($data->status == '7')
-            //         return 'Admin';
-            //     else if($data->status == '8')
-            //         return 'User';
-            //     else if($data->status == '9')
-            //         return 'Mahasiswa';
-            //     else if($data->status == '10')
-            //         return 'Belom Aktif';
-            //     else if($data->status == '11')
-            //         return '-';
-            //     else
-            //         return 'NON';
-            // },
-            //'visible' => true,
             'header' => 'Roles',
-            //'footer' => 'Gambar'
             ],
             'status_detail',
-            //'created_at',
-            //'updated_at',
-            //'verification_token',
 
             [
               'class' => 'yii\grid\ActionColumn',
               'header' => 'Actions',
-              //'headerOptions' => ['style' => 'color:#337ab7'],
               'template' => '{view}{update}',
               'buttons' => [
                 'view' => function ($url, $model) {
@@ -113,11 +82,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'title' => Yii::t('app', 'Update'),
                     ]);
                 },
-                // 'delete' => function ($url, $model) {
-                //     return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-                //                 'title' => Yii::t('app', 'Delete'),
-                //     ]);
-                // }
 
               ],
               'urlCreator' => function ($action, $model, $key, $index) {
@@ -130,10 +94,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     $url ='index.php?r=role/update&email='.$model->email;
                     return $url;
                 }
-                // if ($action === 'delete') {
-                //     $url ='index.php?r=role/delete&id='.$model->id;
-                //     return $url;
-                // }
 
               }
           ],

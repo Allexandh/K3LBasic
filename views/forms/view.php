@@ -31,7 +31,7 @@ $this->registerJsFile(
 <div class="forms-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+<!-- button untuk update atau delete -->
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->caseid], ['class' => 'btn btn-info']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->caseid], [
@@ -59,8 +59,6 @@ $this->registerJsFile(
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            //'caseid',
-
             [
                 'label' => 'Nama',
                 'attribute' => 'Nama',
@@ -80,6 +78,7 @@ $this->registerJsFile(
             'tanggalwaktu',
             'description',
             [
+                //ini untuk menampilkan gambar dari form
                 'attribute' => 'gambar',
                 'label' => 'Gambar',
                 'format' => 'html',
@@ -97,11 +96,11 @@ $this->registerJsFile(
                 'header' => 'Gambar',
             ],
             [
+                //menampilkan gambar dari supervisor
                 'attribute' => 'Gambar Supervisor',
                 'label' => 'Gambar Dari Supervisor',
                 'format' => 'html',
                 'value' => function($data){
-                    //$imageLink = "";
                     $imagesSupervisor = Images::find()->where(['caseId' => (string) $data->caseid."s"])->asArray()->limit(3)->all();
                     if($imagesSupervisor==null){
                         return "On Progress";
@@ -120,6 +119,7 @@ $this->registerJsFile(
             'email',
             'status',
             [
+                //menampilkan informasi supervisor dari form tersebut 
                'label' => 'Supervisor',
                 'attribute' => 'supervisor',
                 'value' => function($data){

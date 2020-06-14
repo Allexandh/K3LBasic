@@ -56,6 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+<!-- ini untuk filtering form -->
     <p>
         <!-- <?= Html::a('Create Forms', ['create'], ['class' => 'btn btn-success']) ?> -->
         <?= Html::a('New', ['status', 'status' => 'Pemeriksaan'], ['class' => 'btn btn-info']) ?>

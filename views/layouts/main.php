@@ -55,6 +55,7 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+    //kalau belom login akan ke ke login
     if(Yii::$app->user->isGuest){
          echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
@@ -73,13 +74,13 @@ AppAsset::register($this);
             )
         ],
     ]);
+    //udah login
+    //kalau mahasiswa biasa atau guest hanya akan muncul tab home, form dan logout
     }else if(Yii::$app->user->identity->status=="Guests"){
             echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            //['label' => 'About', 'url' => ['/site/about']],
-            //['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'Form', 'url' => ['/site/form']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
@@ -95,13 +96,13 @@ AppAsset::register($this);
             )
         ],
     ]);
+    //udah login
+    //kalau supervisor hanya akan muncul tab home, form, list form dan logout
     }else if(Yii::$app->user->identity->status=="Supervisor"){
             echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            //['label' => 'About', 'url' => ['/site/about']],
-            //['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'Form', 'url' => ['/site/form']],
             ['label' => 'List Form', 'url' => ['/forms/index']],
             Yii::$app->user->isGuest ? (
@@ -118,13 +119,13 @@ AppAsset::register($this);
             )
         ],
     ]);
+    //udah login
+    //kalau admin akan muncul tab home, form, list form, list user dan logout
     }else if(Yii::$app->user->identity->status=="Admin"){
             echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            //['label' => 'About', 'url' => ['/site/about']],
-            //['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'Form', 'url' => ['/site/form']],
             ['label' => 'List Form', 'url' => ['/forms/index']],
             ['label' => 'Admin Roles', 'url' => ['/role/index']],

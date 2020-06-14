@@ -8,14 +8,11 @@ use yii\helpers\ArrayHelper;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<!-- untuk update form -->
 <div class="forms-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-<?php
-    //var_dump($notes);
-
-?>
 
     <?= $form->field($model, 'email')->textInput(['readonly'=> true,'maxlength' => true]) ?>
 
@@ -27,6 +24,7 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'description')->textInput(['readonly'=> true,'maxlength' => true]) ?>
 
+<!-- kalau admin, bisa mengubah case due form -->
     <?php 
     if(Yii::$app->user->identity->status == "Admin"){
         echo $form->field($model, 'casedue')->textInput(['maxlength' => true]);
@@ -35,11 +33,12 @@ use yii\helpers\ArrayHelper;
     }
     ?>
 
-
+<!-- untuk ubah status form -->
     <?= $form->field($model, 'status')->dropDownList(
                 ['Pemeriksaan' => 'Pemeriksaan', 'Proses' => 'Proses', 'Selesai' => 'Selesai', 'Batal' => 'Batal']);
     ?>
 
+<!-- untuk mengubah supervisor dari form -->
     <?php 
         if(Yii::$app->user->identity->status == "Admin"){
             echo $form->field($model, 'supervisor')->dropDownList(
@@ -50,6 +49,7 @@ use yii\helpers\ArrayHelper;
         
     ?>
 
+<!-- untuk notes dari admin dan dari supervisor -->
     <?php
         foreach ($notes as $index => $note) {
             if(Yii::$app->user->identity->status == "Admin"){
@@ -68,10 +68,8 @@ use yii\helpers\ArrayHelper;
         }
     ?>
 
+<!-- untuk gambar -->
     <?= $form->field($images, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
-
-
-
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
