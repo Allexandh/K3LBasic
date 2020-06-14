@@ -71,7 +71,7 @@ $this->title = 'Login';
                     <div class="login-content">
                         <div class="login-logo">
                             <a href="#">
-                                <img src="images/icon/logo.png" alt="CoolAdmin">
+                                <img src="images/logopng.png" alt="besafe">
                             </a>
                         </div>
                         <div class="login-form">
